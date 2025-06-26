@@ -47,107 +47,30 @@ export default function StudioClient() {
 
   // Função para extrair apenas o texto falado do roteiro
   const extractSpokenText = (fullScript: string) => {
-    console.log('🎤 Roteiro completo recebido:')
-    console.log(fullScript)
-    console.log('📝 Analisando linha por linha...')
-    
     const lines = fullScript.split('\n')
     const spokenLines: string[] = []
     
-    for (let i = 0; i < lines.length; i++) {
-      const line = lines[i]
-      const trimmed = line.trim()
+    for (const line of lines) {
+      const trimmedLine = line.trim()
       
-      console.log(`Linha ${i + 1}: "${trimmed}"`)
+      // Padroniza a linha para minúsculas para a verificação
+      const lowerLine = trimmedLine.toLowerCase()
       
-      // Pular linhas vazias
-      if (!trimmed) {
-        console.log(`  ⏭️ Pulando linha vazia`)
-        continue
-      }
-      
-      // Pular instruções de cena [...]
-      if (trimmed.startsWith('[') && trimmed.endsWith(']')) {
-        console.log(`  🎬 Pulando instrução de cena: ${trimmed}`)
-        continue
-      }
-      
-      // Pular marcadores de seção **...**
-      if (trimmed.startsWith('**') && trimmed.endsWith('**')) {
-        console.log(`  📍 Pulando marcador de seção: ${trimmed}`)
-        continue
-      }
-      
-      // Pular linhas que são só marcadores como "Música final animada."
-      if (trimmed.toLowerCase().includes('música') && trimmed.length < 50) {
-        console.log(`  🎵 Pulando marcador de música: ${trimmed}`)
-        continue
-      }
-      
-      // Detectar padrões de texto falado
-      const lowerLine = trimmed.toLowerCase()
-      
-      // Padrões de narração/texto falado
-      const spokenPatterns = [
-        'narração:', 
-        'texto/narração:', 
-        'texto narração:', 
-        'voz:',
-        'fala:',
-        'narrador:'
-      ]
-      
-      let isSpokenText = false
-      for (const pattern of spokenPatterns) {
-        if (lowerLine.startsWith(pattern)) {
-          const cleanText = trimmed.replace(/^[^:]+:\s*/, '').replace(/"/g, '').trim()
-          if (cleanText) {
-            console.log(`  🎤 TEXTO FALADO encontrado: "${cleanText}"`)
-            spokenLines.push(cleanText)
-          }
-          isSpokenText = true
-          break
+      // Procura pela palavra-chave "narração:" no início da linha
+      if (lowerLine.startsWith('narração:')) {
+        // Remove a palavra-chave e espaços em branco, mantendo o resto da linha
+        const cleanText = trimmedLine.substring('narração:'.length).trim()
+        
+        // Adiciona o texto limpo se não estiver vazio
+        if (cleanText) {
+          spokenLines.push(cleanText)
         }
-      }
-      
-      if (isSpokenText) continue
-      
-      // Pular explicitamente padrões que NÃO são texto falado
-      const skipPatterns = [
-        'texto na tela:', 
-        'texto:', 
-        'on-screen:', 
-        'visual:', 
-        'imagem:',
-        'cena:',
-        'legenda:'
-      ]
-      
-      let shouldSkip = false
-      for (const pattern of skipPatterns) {
-        if (lowerLine.startsWith(pattern)) {
-          console.log(`  ❌ Pulando texto visual: ${trimmed}`)
-          shouldSkip = true
-          break
-        }
-      }
-      
-      if (shouldSkip) continue
-      
-      // Se não tem ":" no início, pode ser continuação de narração
-      if (!trimmed.includes(':') && trimmed.length > 10) {
-        console.log(`  📝 Possível continuação de narração: "${trimmed}"`)
-        spokenLines.push(trimmed)
-      } else {
-        console.log(`  ⚠️ Linha ignorada: "${trimmed}"`)
       }
     }
     
-    const result = spokenLines.join(' ')
-    console.log('🎯 RESULTADO FINAL:')
-    console.log(`Total de linhas faladas: ${spokenLines.length}`)
-    console.log(`Texto completo: "${result}"`)
-    
+    // Junta todas as linhas de narração com um espaço
+    const result = spokenLines.join(' ').trim()
+    console.log('Texto extraído para áudio:', result)
     return result
   }
 

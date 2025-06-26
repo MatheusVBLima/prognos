@@ -38,19 +38,20 @@ INSTRUÇÕES IMPORTANTES:
 7. Adicione elementos visuais sugeridos entre [colchetes]
 8. Estruture em cenas curtas e dinâmicas
 9. IMPORTANTE: Não invente informações, use apenas os dados fornecidos
+10. PADRÃO OBRIGATÓRIO: Sempre use "Narração:" para indicar o texto que deve ser lido em voz alta. Qualquer texto que não seja para ser narrado (como texto na tela) deve usar outro marcador como "Texto na tela:".
 
 FORMATO DO ROTEIRO:
 **GANCHO (0-3s):**
 [Descrição visual]
-Texto/narração baseado nas informações específicas...
+Narração: ...
 
 **DESENVOLVIMENTO (3-45s):**
 [Descrição visual]
-Texto/narração explorando os pontos das informações específicas...
+Narração: ...
 
 **CALL TO ACTION (45-60s):**
 [Descrição visual]
-Texto/narração final relacionado ao assunto...
+Narração: ...
 
 Gere um roteiro completo seguindo essas diretrizes:
 `
