@@ -17,6 +17,10 @@ interface BreadcrumbsProps {
 }
 
 export function BreadcrumbSection({ items }: BreadcrumbsProps) {
+  if (items.length <= 1) {
+    return null
+  }
+  
   return (
     <div className="min-w-0 overflow-hidden">
       <Breadcrumb>
