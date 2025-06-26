@@ -6,6 +6,7 @@ import { cn } from "@/lib/utils"
 import { Toaster } from "@/components/ui/sonner"
 import { ThemeProvider } from "@/providers/ThemeProvider"
 import { QueryProvider } from "@/providers/QueryProvider"
+import { NuqsAdapter } from 'nuqs/adapters/next/app'
 
 const nunito = Nunito({
   variable: "--font-nunito",
@@ -41,9 +42,11 @@ export default function RootLayout({
             disableTransitionOnChange
           >
           <QueryProvider>
-            {children}
+            <NuqsAdapter>
+              {children}
+            </NuqsAdapter>
+            <Toaster position="bottom-right" />
           </QueryProvider>
-          <Toaster position="bottom-right" />
           </ThemeProvider>
       </body>
     </html>

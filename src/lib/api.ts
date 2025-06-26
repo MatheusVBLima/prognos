@@ -78,39 +78,17 @@ export const trendsKeys = {
   list: (filters: TrendsFilters) => [...trendsKeys.lists(), filters] as const,
 }
 
-// Função para salvar no histórico
+// Função para salvar no histórico (desabilitada - API removida)
 export async function saveSearchToHistory(
   data: TrendItem[], 
   filters: TrendsFilters,
   status: 'success' | 'error' | 'partial' = 'success', 
   errorMsg?: string
 ) {
-  try {
-    const historyData = {
-      queryParams: filters,
-      resultsCount: data?.length || 0,
-      topResults: data?.slice(0, 3).map(item => ({
-        term: item.term,
-        value: item.value
-      })),
-      status,
-      errorMessage: errorMsg,
-      source: 'web',
-      device: typeof navigator !== 'undefined' ? navigator.userAgent : undefined
-    };
-
-    const response = await fetch('/api/history', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(historyData),
-    });
-
-    if (!response.ok) {
-      console.error('Falha ao salvar no histórico');
-    }
-  } catch (err) {
-    console.error('Erro ao registrar histórico:', err);
-  }
+  // API de histórico foi removida por não estar sendo usada
+  console.log('📝 Histórico de pesquisa (desabilitado):', {
+    resultsCount: data?.length || 0,
+    filters,
+    status
+  });
 } 

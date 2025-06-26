@@ -1,12 +1,14 @@
 "use client"
+
 import { SidebarTrigger } from "@/components/ui/sidebar"
 import { ThemeSwitcher } from "@/components/theme/ThemeSwitcher"
 import { BreadcrumbSection } from "@/components/BreadcrumbSection"
-import { usePathname, useSearchParams } from "next/navigation"
+import { usePathname } from "next/navigation"
+import { useQueryState } from "nuqs"
 
 export function HeaderDashboard() {
 	const pathname = usePathname()
-	const searchParams = useSearchParams()
+	const [trend] = useQueryState('trend')
 
 	// Gerar breadcrumbs baseado na rota atual
 	const getBreadcrumbs = () => {
@@ -15,9 +17,9 @@ export function HeaderDashboard() {
 		]
 
 		if (pathname.includes("/studio")) {
-			const trend = searchParams.get('trend')
 			breadcrumbs.push({ 
-				label: trend ? `Studio - ${trend}` : "Studio de Roteiros"
+				label: trend ? `Studio - ${trend}` : "Studio de Roteiros",
+				href: pathname // Use a rota atual como href
 			})
 		}
 
