@@ -9,7 +9,7 @@ import { Label } from "@/components/ui/label"
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
 import { Badge } from "@/components/ui/badge"
 import { Separator } from "@/components/ui/separator"
-import { Play, Download, Mic, Wand2, Volume2, Edit3, Save, Headphones, TrendingUp, Search } from "lucide-react"
+import { Play, Download, Mic, Wand2, Volume2, Edit3, Save, Headphones, TrendingUp, Search, Eye } from "lucide-react"
 import Link from "next/link"
 import { motion } from "framer-motion"
 
@@ -506,7 +506,7 @@ export default function StudioPage() {
                     variant="outline"
                     size="sm"
                   >
-                    👁️ Visualizar texto que será falado
+                    <Eye className="w-4 h-4 mr-2" /> Visualizar texto que será falado
                   </Button>
                 )}
 
