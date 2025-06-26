@@ -300,9 +300,9 @@ export default function StudioPage() {
   }
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen space-y-4">
       {/* Header */}
-      <div className="border-b bg-card">
+      <div className="border-b bg-card rounded-lg">
         <div className="container mx-auto px-4 py-4">
           <div className="flex items-center gap-4">
             <div className="flex-1">
@@ -318,7 +318,7 @@ export default function StudioPage() {
       </div>
 
       {/* Main Content */}
-      <div className="container mx-auto px-4 py-8">
+      <div>
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
           
           {/* Preview Card */}
