@@ -2,6 +2,7 @@
 
 import { Button } from "@/components/ui/button";
 import { TrendChart } from "@/components/trends/TrendChart";
+import Link from "next/link";
 
 // Dados de exemplo para o gráfico
 const demoData = [
@@ -30,9 +31,11 @@ export default function Home() {
               </p>
             </div>
             <div className="space-x-4">
-              <Button size="lg">
-                Começar Gratuitamente
-              </Button>
+             <Link href="/dashboard">
+                <Button size="lg">
+                  Começar Gratuitamente
+                </Button>
+             </Link>
               <Button variant="outline" size="lg">
                 Saber Mais
               </Button>

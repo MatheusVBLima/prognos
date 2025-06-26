@@ -1,6 +1,6 @@
 "use client"
 import { SidebarTrigger } from "@/components/ui/sidebar"
-
+import { ThemeSwitcher } from "@/components/theme/ThemeSwitcher"
 
 export function HeaderDashboard() {
 	return (
@@ -8,8 +8,9 @@ export function HeaderDashboard() {
 			<div className="flex items-center space-x-4">
 				<SidebarTrigger className="-ml-1" />
 			</div>
-
-			
+			<div className="flex items-center space-x-4">
+				<ThemeSwitcher />
+			</div>
 		</header>
 	)
 }

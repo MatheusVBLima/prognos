@@ -4,6 +4,7 @@ import { Nunito } from "next/font/google"
 import { PT_Sans } from "next/font/google"
 import { cn } from "@/lib/utils"
 import { Toaster } from "@/components/ui/sonner"
+import { ThemeProvider } from "@/providers/ThemeProvider"
 
 const nunito = Nunito({
   variable: "--font-nunito",
@@ -27,13 +28,20 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="pt-BR">
+    <html lang="pt-BR" >
       <body className={cn(
         "bg-background min-h-screen font-sans antialiased", 
         `${nunito.variable} ${ptSans.variable}`
       )}>
+        <ThemeProvider
+            attribute="class"
+            defaultTheme="system"
+            enableSystem
+            disableTransitionOnChange
+          >
           {children}
           <Toaster position="top-right" />
+          </ThemeProvider>
       </body>
     </html>
   );
