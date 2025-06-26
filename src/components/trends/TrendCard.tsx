@@ -4,10 +4,11 @@ import { useState } from "react"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
-import { ChevronDown, ChevronRight, ExternalLink, TrendingUp, Clock, Eye } from "lucide-react"
+import { ChevronDown, ChevronRight, ExternalLink, TrendingUp, Clock, Eye, Video } from "lucide-react"
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible"
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip"
 import { motion, AnimatePresence } from "framer-motion"
+import Link from "next/link"
 
 interface TrendCardProps {
   term: string
@@ -185,31 +186,45 @@ export function TrendCard({
                     </motion.div>
                   )}
 
-                  <motion.div 
-                    className="flex flex-wrap gap-2"
-                    initial={{ opacity: 0, y: 10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.4, duration: 0.3 }}
-                  >
-                    <Badge variant="outline" className="text-xs">
-                      Volume: {formatNumber(value)}+ pesquisas
-                    </Badge>
-                    {percentage_increase && (
-                      <Badge variant="outline" className="text-xs">
-                        ↗ {percentage_increase}
-                      </Badge>
-                    )}
-                    {time_started && (
-                      <Badge variant="outline" className="text-xs">
-                        {time_started}
-                      </Badge>
-                    )}
-                    {rank && (
-                      <Badge variant="default" className="text-xs">
-                        #{rank} trending
-                      </Badge>
-                    )}
-                  </motion.div>
+                                     <motion.div 
+                     className="flex flex-wrap gap-2"
+                     initial={{ opacity: 0, y: 10 }}
+                     animate={{ opacity: 1, y: 0 }}
+                     transition={{ delay: 0.4, duration: 0.3 }}
+                   >
+                     <Badge variant="outline" className="text-xs">
+                       Volume: {formatNumber(value)}+ pesquisas
+                     </Badge>
+                     {percentage_increase && (
+                       <Badge variant="outline" className="text-xs">
+                         ↗ {percentage_increase}
+                       </Badge>
+                     )}
+                     {time_started && (
+                       <Badge variant="outline" className="text-xs">
+                         {time_started}
+                       </Badge>
+                     )}
+                     {rank && (
+                       <Badge variant="default" className="text-xs">
+                         #{rank} trending
+                       </Badge>
+                     )}
+                   </motion.div>
+
+                   <motion.div
+                     initial={{ opacity: 0, y: 10 }}
+                     animate={{ opacity: 1, y: 0 }}
+                     transition={{ delay: 0.5, duration: 0.3 }}
+                     className="pt-4 border-t"
+                   >
+                     <Link href={`/dashboard/studio?trend=${encodeURIComponent(term)}&rank=${rank}&volume=${value}&description=${encodeURIComponent(description || '')}&hints=${encodeURIComponent(JSON.stringify(hint || []))}`}>
+                       <Button className="w-full gap-2">
+                         <Video className="w-4 h-4" />
+                         Usar essa trend para criar roteiro
+                       </Button>
+                     </Link>
+                   </motion.div>
                 </CardContent>
               </motion.div>
             )}

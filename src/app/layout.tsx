@@ -5,6 +5,7 @@ import { PT_Sans } from "next/font/google"
 import { cn } from "@/lib/utils"
 import { Toaster } from "@/components/ui/sonner"
 import { ThemeProvider } from "@/providers/ThemeProvider"
+import { QueryProvider } from "@/providers/QueryProvider"
 
 const nunito = Nunito({
   variable: "--font-nunito",
@@ -39,8 +40,10 @@ export default function RootLayout({
             enableSystem
             disableTransitionOnChange
           >
-          {children}
-          <Toaster position="top-right" />
+          <QueryProvider>
+            {children}
+          </QueryProvider>
+          <Toaster position="bottom-right" />
           </ThemeProvider>
       </body>
     </html>

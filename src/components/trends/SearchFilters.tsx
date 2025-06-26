@@ -69,10 +69,10 @@ export function SearchFilters({
   onPeriodChange,
   onCategoryChange,
   onSortChange,
-  selectedCountry = "Brasil",
-  selectedPeriod = "Últimas 24 horas",
-  selectedCategory = "Todas as categorias",
-  selectedSort = "Por relevância"
+  selectedCountry,
+  selectedPeriod,
+  selectedCategory,
+  selectedSort
 }: SearchFiltersProps) {
 
   return (
@@ -80,7 +80,7 @@ export function SearchFilters({
       {/* País */}
       <div className="relative">
         <Select
-          value={selectedCountry}
+          value={selectedCountry || ""}
           onValueChange={(value) => onRegionChange?.(value)}
         >
           <SelectTrigger className="min-w-[120px]">
@@ -107,7 +107,7 @@ export function SearchFilters({
       {/* Período */}
       <div className="relative">
         <Select
-          value={selectedPeriod}
+          value={selectedPeriod || ""}
           onValueChange={(value) => onPeriodChange?.(value)}
         >
           <SelectTrigger className="min-w-[180px]">
@@ -134,7 +134,7 @@ export function SearchFilters({
       {/* Categoria */}
       <div className="relative">
         <Select
-          value={selectedCategory}
+          value={selectedCategory || ""}
           onValueChange={(value) => onCategoryChange?.(value)}
         >
           <SelectTrigger className="min-w-[200px]">
@@ -161,12 +161,12 @@ export function SearchFilters({
       {/* Ordenação */}
       <div className="relative">
         <Select
-          value={selectedSort}
+          value={selectedSort || ""}
           onValueChange={(value) => onSortChange?.(value)}
         >
           <SelectTrigger className="min-w-[160px]">
             <ArrowDownAZ className="h-4 w-4 " />
-            <SelectValue placeholder="Ordenação" />
+            <SelectValue placeholder="Ordenar por" />
           </SelectTrigger>
           <SelectContent >
             <SelectGroup>

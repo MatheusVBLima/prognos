@@ -2,7 +2,7 @@
 
 import * as React from "react"
 import {
-  BarChart3, TrendingUp
+  BarChart3, Brain, TrendingUp
 } from "lucide-react"
 
 import { NavMain } from "@/components/nav-main"
@@ -38,11 +38,13 @@ const data = {
       items: [
         {
           title: "Visão Geral",
+          icon: BarChart3,
           url: "/dashboard",
         },
         {
-          title: "Histórico",
-          url: "/dashboard/history",
+          title: "Studio IA",
+          icon: Brain,
+          url: "/dashboard/studio",
         },
        
       ],

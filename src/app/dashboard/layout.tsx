@@ -3,7 +3,7 @@
 import * as React from "react"
 import { AppSidebar } from "@/components/app-sidebar"
 import { Separator } from "@/components/ui/separator"
-import { Toaster } from "@/components/ui/sonner"
+
 import { HeaderDashboard } from "@/components/HeaderDashboard"
 import { SidebarProvider, SidebarInset } from "@/components/ui/sidebar"
 
@@ -25,7 +25,6 @@ export default function DashboardLayout({
       <Separator />
       <div className="flex flex-col flex-1 gap-4 p-4">
         {children}
-        <Toaster />
       </div>
     </SidebarInset>
   </SidebarProvider>
