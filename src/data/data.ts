@@ -181,10 +181,10 @@
             "time_started": "5 hours ago",
             "description": "Partida de futebol entre Newcastle United (Inglaterra) e Atlético Madrid (Espanha) em jogo amistoso de pré-temporada, gerando interesse dos fãs de futebol no Brasil.",
             "hint": [
-              "Newcastle United venceu o Atlético Madrid por 2x1 em amistoso de pré-temporada",
+              "Newcastle United perdeu para o Atlético Madrid por 2x0 em amistoso de pré-temporada",
               "Jogo foi disputado no St. James' Park em Newcastle, Inglaterra",
-              "Gols do Newcastle marcados por Alexander Isak e Harvey Barnes",
-              "Atlético Madrid descontou com gol de João Félix",
+              "Gols do Atlético Madrid marcados por Julián Álvarez e Antoine Griezmann",
+              "Newcastle United não conseguiu marcar gols",
               "Partida fez parte da preparação dos times para a nova temporada",
               "Newcastle mostrou boa forma física e tática sob comando de Eddie Howe",
               "Atlético Madrid utilizou o jogo para testar novas formações táticas"
