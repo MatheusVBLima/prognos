@@ -10,8 +10,9 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { RefreshCw, Loader2, InfoIcon, BarChart3, TrendingUp, Eye, Globe } from "lucide-react"
 import { Badge } from "@/components/ui/badge"
 import { TrendItem } from "@/types/trends"
-import { useTrends, useRefreshTrends } from "@/hooks/useTrends"
+import { data } from "@/data/data"
 import { TrendCardSkeletonList } from "@/components/trends/TrendCardSkeleton"
+import { useDashboard } from "@/contexts/DashboardContext"
 
 interface TrendsFilters {
   country: string
@@ -32,40 +33,52 @@ export default function DashboardClient({
     sort: "Por relevância"
   } 
 }: DashboardClientProps) {
-  const [filters, setFilters] = React.useState<TrendsFilters>({
-    country: "",
-    period: "",
-    category: "",
-    sort: ""
-  })
-  const [chartType, setChartType] = React.useState<'bar' | 'line'>('bar')
-  const [hasSearched, setHasSearched] = React.useState(false)
-
-  const queryFilters = React.useMemo(() => {
-    const hasEmptyFilters = !filters.country || !filters.period
-    return hasEmptyFilters ? initialFilters : filters
-  }, [filters, initialFilters])
-
-  const { 
-    data: trendData, 
+  const {
+    filters,
+    setFilters,
+    activeTab,
+    setActiveTab,
+    chartType,
+    setChartType,
+    hasSearched,
+    setHasSearched,
     isLoading,
-    isFetching,
-    error,
-  } = useTrends(queryFilters, hasSearched)
+    setIsLoading,
+    trendData,
+    setTrendData,
+  } = useDashboard()
 
-  const refreshTrends = useRefreshTrends()
+  const transformMockData = (): TrendItem[] => {
+    return data.google_trends_brazil_top_10.top_trending_searches.map((item) => ({
+      term: item.search_term,
+      value: parseInt(item.search_volume.replace(/\D/g, '')) || Math.floor(Math.random() * 100000) + 1000,
+      timestamp: new Date().toISOString(),
+      rank: item.rank,
+      description: item.description,
+      hint: item.hint,
+      percentage_increase: item.percentage_increase,
+      time_started: item.time_started
+    }))
+  }
   
   const isInitialLoading = isLoading && !trendData
-  const isRefreshing = isFetching && !!trendData
+  const isRefreshing = isLoading && !!trendData
   
-  const shouldShowInitialMessage = !hasSearched && !isInitialLoading && !isFetching
+  const shouldShowInitialMessage = !hasSearched && !isInitialLoading && !isLoading
   const shouldShowData = hasSearched && trendData && trendData.length > 0 && !isInitialLoading
-  const shouldShowError = hasSearched && error && !isInitialLoading && !isFetching
+  const shouldShowError = false
 
-  const handleApplyFilters = () => {
+  const handleApplyFilters = async () => {
     if (!filters.country || !filters.period) return
-    if (!hasSearched) setHasSearched(true)
-    refreshTrends.mutate(queryFilters)
+    
+    setIsLoading(true)
+    
+    setTimeout(() => {
+      const mockData = transformMockData()
+      setTrendData(mockData)
+      setHasSearched(true)
+      setIsLoading(false)
+    }, 1500)
   }
 
   const handleFilterChange = (newFilters: Partial<TrendsFilters>) => {
@@ -89,11 +102,11 @@ export default function DashboardClient({
         <Button 
           variant="default" 
           onClick={handleApplyFilters} 
-          disabled={isInitialLoading || refreshTrends.isPending || !filters.country || !filters.period} 
+          disabled={isLoading || !filters.country || !filters.period} 
           className="gap-2"
         >
-          {refreshTrends.isPending ? <Loader2 className="h-4 w-4 animate-spin" /> : <Globe className="h-4 w-4" />}
-          {refreshTrends.isPending ? 'Buscando...' : 'Aplicar Filtros'}
+          {isLoading ? <Loader2 className="h-4 w-4 animate-spin" /> : <Globe className="h-4 w-4" />}
+          {isLoading ? 'Buscando...' : 'Aplicar Filtros'}
         </Button>
       </div>
 
@@ -110,17 +123,6 @@ export default function DashboardClient({
       
       {isInitialLoading && <TrendCardSkeletonList />}
 
-      {shouldShowError && (
-        <div className="p-4 text-red-600 bg-red-50 dark:bg-red-950/20 rounded-lg border border-red-200 dark:border-red-800">
-          <div className="flex items-center space-x-2">
-            <InfoIcon className="h-5 w-5" />
-            <div>
-              <h3 className="font-semibold">Erro ao buscar tendências</h3>
-              <p className="text-sm">{error?.message || 'Tente novamente.'}</p>
-            </div>
-          </div>
-        </div>
-      )}
 
       {shouldShowInitialMessage && (
         <div className="text-center py-12">
@@ -152,25 +154,25 @@ export default function DashboardClient({
             </Card>
           </div>
 
-          <Tabs value={chartType} onValueChange={(value) => setChartType(value as 'bar' | 'line')} className="space-y-6">
+          <Tabs value={activeTab} onValueChange={(value) => setActiveTab(value as 'list' | 'charts')} className="space-y-6">
             <TabsList className="grid w-full grid-cols-2">
-              <TabsTrigger value="charts">Visualizações</TabsTrigger>
               <TabsTrigger value="list">Lista Detalhada</TabsTrigger>
+              <TabsTrigger value="charts">Visualizações</TabsTrigger>
             </TabsList>
+
+            <TabsContent value="list" className="space-y-6">
+              <div className="grid grid-cols-1 gap-6">
+                {safeData.map((item, index) => (
+                  <TrendCard key={`${item.term}-${index}`} {...item} />
+                ))}
+              </div>
+            </TabsContent>
 
             <TabsContent value="charts" className="space-y-6">
               <Card>
                 <CardHeader><CardTitle>Volume de Pesquisas por Tendência</CardTitle></CardHeader>
                 <CardContent><TrendChart data={safeData} type={chartType} /></CardContent>
               </Card>
-            </TabsContent>
-
-            <TabsContent value="list" className="space-y-6">
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {safeData.map((item, index) => (
-                  <TrendCard key={`${item.term}-${index}`} {...item} />
-                ))}
-              </div>
             </TabsContent>
           </Tabs>
         </>

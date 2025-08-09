@@ -7,6 +7,7 @@ import { Separator } from "@/components/ui/separator"
 
 import { HeaderDashboard } from "@/components/HeaderDashboard"
 import { SidebarProvider, SidebarInset } from "@/components/ui/sidebar"
+import { DashboardProvider } from "@/contexts/DashboardContext"
 import { Suspense } from "react"
 
 
@@ -16,23 +17,25 @@ export default function DashboardLayout({
   children: React.ReactNode
 }) {
   return (
-    <SidebarProvider>
-    <AppSidebar />
-    <SidebarInset>
-    <Suspense>
-        <header className="flex justify-between h-16 shrink-0 items-center gap-2 transition-[width,height] ease-linear group-has-[[data-collapsible=icon]]/sidebar-wrapper:h-16">
-          <div className="flex items-center w-full gap-2 px-4">
-       
-            <HeaderDashboard />
-          
+    <DashboardProvider>
+      <SidebarProvider>
+      <AppSidebar />
+      <SidebarInset>
+      <Suspense>
+          <header className="flex justify-between h-16 shrink-0 items-center gap-2 transition-[width,height] ease-linear group-has-[[data-collapsible=icon]]/sidebar-wrapper:h-16">
+            <div className="flex items-center w-full gap-2 px-4">
+         
+              <HeaderDashboard />
+            
+            </div>
+          </header>
+          <Separator />
+          <div className="flex flex-col flex-1 gap-4 p-4">
+            {children}
           </div>
-        </header>
-        <Separator />
-        <div className="flex flex-col flex-1 gap-4 p-4">
-          {children}
-        </div>
-        </Suspense>
-    </SidebarInset>
-  </SidebarProvider>
+          </Suspense>
+      </SidebarInset>
+    </SidebarProvider>
+    </DashboardProvider>
   )
 } 
