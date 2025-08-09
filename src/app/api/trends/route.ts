@@ -60,10 +60,65 @@ export async function GET(request: Request) {
         const period = url.searchParams.get('period') || 'Últimas 24 horas';
         const category = url.searchParams.get('category') || 'Todas as categorias';
         const sortOption = url.searchParams.get('sort') || 'Por relevância';
+        const useBrowserbase = url.searchParams.get('browserbase') === 'true';
 
-        console.log(`[API /trends] Parâmetros: country=${country}, period=${period}, category=${category}, sort=${sortOption}`);
+        console.log(`[API /trends] Parâmetros: country=${country}, period=${period}, category=${category}, sort=${sortOption}, browserbase=${useBrowserbase}`);
 
-        // Converter dados estáticos para o formato esperado
+        // Se browserbase estiver habilitado, chamar a API de scraping
+        if (useBrowserbase) {
+            try {
+                console.log(`[API /trends] Usando Browserbase para scraping`);
+                
+                const scrapeResponse = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000'}/api/trends/scrape`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ country, period, category }),
+                });
+
+                if (scrapeResponse.ok) {
+                    const scrapeData = await scrapeResponse.json();
+                    
+                    if (scrapeData.success) {
+                        // Transformar dados do scraping para o formato esperado
+                        const trendsData = scrapeData.data.map((trend: any) => ({
+                            term: trend.search_term,
+                            value: parseSearchVolume(trend.search_volume),
+                            timestamp: new Date().toISOString(),
+                            rank: trend.rank,
+                            description: trend.description,
+                            hint: trend.hint,
+                            percentage_increase: trend.percentage_increase,
+                            time_started: trend.time_started
+                        }));
+
+                        // Aplicar ordenação
+                        const sortedTrends = applySorting(trendsData, sortOption);
+
+                        console.log(`[API /trends] Retornando ${sortedTrends.length} tendências do Browserbase`);
+
+                        return NextResponse.json({
+                            data: sortedTrends,
+                            message: "Tendências obtidas via Browserbase (dados reais)",
+                            filters: { country, period, category, sort: sortOption },
+                            cached: false,
+                            source: "browserbase_scraping",
+                            extraction_date: scrapeData.metadata.extraction_date,
+                            data_source: `Google Trends ${country}`,
+                            metadata: scrapeData.metadata
+                        });
+                    }
+                }
+                
+                console.log(`[API /trends] Erro no scraping, usando dados estáticos como fallback`);
+            } catch (error) {
+                console.error('[API /trends] Erro ao chamar API de scraping:', error);
+                console.log(`[API /trends] Usando dados estáticos como fallback`);
+            }
+        }
+
+        // Converter dados estáticos para o formato esperado (fallback ou quando browserbase não está habilitado)
         const trends = convertStaticDataToTrends();
         
         // Aplicar filtros básicos (simulação)
@@ -82,7 +137,9 @@ export async function GET(request: Request) {
 
         return NextResponse.json({
             data: sortedTrends,
-            message: "Tendências obtidas dos dados estáticos",
+            message: useBrowserbase 
+                ? "Fallback para dados estáticos (erro no Browserbase)" 
+                : "Tendências obtidas dos dados estáticos",
             filters: { country, period, category, sort: sortOption },
             cached: false,
             source: "static_data",

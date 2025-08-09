@@ -1,28 +1,19 @@
 'use client';
 
-import { Button } from "@/components/ui/button";
-import { TrendChart } from "@/components/trends/TrendChart";
-import Link from "next/link";
-
-// Dados de exemplo para o gráfico
-const demoData = [
-  { timestamp: '2024-04-01', value: 65, term: 'Exemplo' },
-  { timestamp: '2024-04-02', value: 59, term: 'Exemplo' },
-  { timestamp: '2024-04-03', value: 80, term: 'Exemplo' },
-  { timestamp: '2024-04-04', value: 81, term: 'Exemplo' },
-  { timestamp: '2024-04-05', value: 56, term: 'Exemplo' },
-  { timestamp: '2024-04-06', value: 55, term: 'Exemplo' },
-  { timestamp: '2024-04-07', value: 40, term: 'Exemplo' },
-];
+import Globe3D from '@/components/mvpblocks/3dglobe';
+import Feature1 from '@/components/mvpblocks/feature-1';
+import SimplePricing from '@/components/mvpblocks/simple-pricing';
+import FooterGlow from '@/components/mvpblocks/footer-glow';
+import BentoGrid1 from '@/components/mvpblocks/bento-grid-1';
 
 export default function Home() {
   return (
-    <div className="flex flex-col items-center justify-center h-screen">
-     <Link href="/dashboard">
-      <Button>
-        Dashboard
-      </Button>
-     </Link>
+    <div className="bg-gradient-to-br from-[#0a0613] to-[#150d27] text-foreground">
+      <Globe3D />
+      <Feature1 />
+      <BentoGrid1 />
+      <SimplePricing />
+      <FooterGlow />
     </div>
   );
 }

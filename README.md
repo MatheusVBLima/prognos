@@ -1,36 +1,96 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Prognos - Dashboard de Tendências
 
-## Getting Started
+Um dashboard avançado para análise de tendências do Google Trends em tempo real, powered by **Browserbase** para web scraping inteligente.
 
-First, run the development server:
+## 🚀 Funcionalidades
 
+- ✅ **Scraping em tempo real** do Google Trends via Browserbase
+- ✅ **Análise por país** (Brasil, EUA, Reino Unido, Alemanha, etc.)
+- ✅ **Contexto inteligente** para cada tendência via pesquisa automatizada
+- ✅ **Interface moderna** com Next.js 15 + React 19
+- ✅ **Dados estruturados** com descrições e insights
+- ✅ **Dashboard interativo** com gráficos e filtros
+
+## 📋 Pré-requisitos
+
+1. **Node.js 18+**
+2. **Conta no Browserbase** (gratuita)
+3. **API Key do Browserbase**
+
+## 🛠️ Instalação
+
+1. **Clone o repositório:**
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+git clone <repo-url>
+cd prognos
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+2. **Instale as dependências:**
+```bash
+npm install
+```
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+3. **Configure o Browserbase:**
+```bash
+# Crie o arquivo .env.local baseado no exemplo
+# Adicione suas credenciais:
+BROWSERBASE_API_KEY=your_api_key_here
+BROWSERBASE_PROJECT_ID=your_project_id_here
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+4. **Teste a configuração:**
+```bash
+npm run test:browserbase
+```
 
-## Learn More
+5. **Inicie o servidor:**
+```bash
+npm run dev
+```
 
-To learn more about Next.js, take a look at the following resources:
+## 🎯 Como Usar
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+1. Acesse [http://localhost:3000](http://localhost:3000)
+2. Vá para o Dashboard de Tendências
+3. **Selecione os filtros** (país, período, categoria)
+4. **Clique em "Aplicar Filtros"**
+5. **Aguarde** o scraping dos dados reais (alguns segundos)
+6. **Explore** as tendências com contexto inteligente!
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## 🔧 Configuração do Browserbase
 
-## Deploy on Vercel
+Veja o arquivo `BROWSERBASE_SETUP.md` para instruções detalhadas sobre:
+- Como criar conta no Browserbase
+- Configurar variáveis de ambiente
+- Troubleshooting comum
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## 🏗️ Tecnologias
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- **Next.js 15** - Framework React
+- **React 19** - Biblioteca de UI
+- **Browserbase** - Web scraping infrastructure
+- **Puppeteer** - Browser automation
+- **TanStack Query** - Data fetching
+- **Tailwind CSS** - Styling
+- **Radix UI** - Component primitives
+
+## 📚 API Routes
+
+- `GET /api/trends` - Buscar tendências (com/sem Browserbase)
+- `POST /api/trends/scrape` - Scraping direto via Browserbase
+
+## 🤝 Contribuição
+
+1. Fork o projeto
+2. Crie uma branch para sua feature
+3. Commit suas mudanças
+4. Push para a branch
+5. Abra um Pull Request
+
+## 📄 Licença
+
+Este projeto está sob a licença MIT.
+
+---
+
+**Desenvolvido com ❤️ usando Browserbase para web scraping inteligente**

@@ -1,4 +1,4 @@
-export const data = {
+/* export const data = {
     "google_trends_brazil_top_10": {
       "extraction_date": "2025-06-26",
       "source": "Google Trends Brazil",
@@ -166,4 +166,183 @@ export const data = {
         }
       ]
     }
+  } */
+
+    export const data = {
+      "google_trends_brazil_top_10": {
+        "extraction_date": "2025-08-09",
+        "source": "Google Trends Brazil",
+        "top_trending_searches": [
+          {
+            "rank": 1,
+            "search_term": "newcastle x atlético madrid",
+            "search_volume": "20K+",
+            "percentage_increase": "1,000%",
+            "time_started": "5 hours ago",
+            "description": "Partida de futebol entre Newcastle United (Inglaterra) e Atlético Madrid (Espanha) em jogo amistoso de pré-temporada, gerando interesse dos fãs de futebol no Brasil.",
+            "hint": [
+              "Newcastle United venceu o Atlético Madrid por 2x1 em amistoso de pré-temporada",
+              "Jogo foi disputado no St. James' Park em Newcastle, Inglaterra",
+              "Gols do Newcastle marcados por Alexander Isak e Harvey Barnes",
+              "Atlético Madrid descontou com gol de João Félix",
+              "Partida fez parte da preparação dos times para a nova temporada",
+              "Newcastle mostrou boa forma física e tática sob comando de Eddie Howe",
+              "Atlético Madrid utilizou o jogo para testar novas formações táticas"
+            ]
+          },
+          {
+            "rank": 2,
+            "search_term": "coritiba x chapecoense",
+            "search_volume": "100K+",
+            "percentage_increase": "1,000%",
+            "time_started": "23 hours ago",
+            "description": "Confronto entre Coritiba e Chapecoense pela Série B do Campeonato Brasileiro, com o Coritiba assumindo a liderança da competição após empate sem gols.",
+            "hint": [
+              "Coritiba empatou 0x0 com a Chapecoense no Estádio Couto Pereira",
+              "Com o empate, Coritiba assumiu a liderança da Série B com 39 pontos",
+              "Chapecoense segue invicta há 7 jogos e está no G-4 com 34 pontos",
+              "Jogo teve 22.040 torcedores presentes e renda de R$ 373.430,00",
+              "Coritiba dominou o primeiro tempo mas não conseguiu converter as chances",
+              "Dallatorre e Josué perderam as melhores oportunidades do Coxa",
+              "Próximo jogo do Coritiba será contra o Novorizontino fora de casa"
+            ]
+          },
+          {
+            "rank": 3,
+            "search_term": "damares alves pede perdão",
+            "search_volume": "10K+",
+            "percentage_increase": "1,000%",
+            "time_started": "21 hours ago",
+            "description": "Senadora Damares Alves pediu 'perdão' ao PT por não ter acreditado nas críticas do partido sobre Alexandre de Moraes durante sua indicação ao STF em 2017.",
+            "hint": [
+              "Damares pediu perdão ironicamente ao PT por não acreditar em avisos sobre Moraes",
+              "Em 2017, PT alertou que Moraes seria um 'tirano' durante sabatina no STF",
+              "Gleisi Hoffmann havia chamado Moraes de 'militante partidário condenado'",
+              "Declaração foi feita durante coletiva da oposição no Senado",
+              "Oposição coletou 41 assinaturas para pedido de impeachment de Moraes",
+              "Damares disse que conservadores 'erraram' mas agora estão 'abrindo os olhos'",
+              "Davi Alcolumbre já informou que não pautará votação do impeachment"
+            ]
+          },
+          {
+            "rank": 4,
+            "search_term": "hugo motta camara",
+            "search_volume": "10K+",
+            "percentage_increase": "1,000%",
+            "time_started": "19 hours ago",
+            "description": "Presidente da Câmara Hugo Motta enviou à Corregedoria denúncias contra 14 deputados envolvidos na ocupação do plenário por cerca de 30 horas em protesto.",
+            "hint": [
+              "Hugo Motta encaminhou denúncias contra 14 deputados à Corregedoria Parlamentar",
+              "Deputados podem ter mandatos suspensos ou cassados por quebra de decoro",
+              "Lista inclui Nikolas Ferreira, Bia Kicis, Sóstenes Cavalcante e outros",
+              "Ocupação durou cerca de 30 horas em protesto por anistia a Bolsonaro",
+              "Marcos Pollon e Van Hattem se recusaram a deixar cadeiras da Mesa Diretora",
+              "Zé Trovão usou a perna para bloquear acesso de Motta à presidência",
+              "Corregedoria terá prazo para analisar casos e emitir pareceres"
+            ]
+          },
+          {
+            "rank": 5,
+            "search_term": "leeds x milan",
+            "search_volume": "10K+",
+            "percentage_increase": "1,000%",
+            "time_started": "5 hours ago",
+            "description": "Partida amistosa entre Leeds United e AC Milan terminou empatada em 1x1 no Aviva Stadium em Dublin, como parte da pré-temporada dos clubes.",
+            "hint": [
+              "Leeds United empatou 1x1 com AC Milan em amistoso de pré-temporada",
+              "Jogo foi disputado no Aviva Stadium em Dublin com 35.000 presentes",
+              "Santiago Gimenez abriu o placar para o Milan aos 31 minutos",
+              "Anton Stach empatou para o Leeds aos 67 minutos",
+              "Partida fez parte da preparação dos times para nova temporada",
+              "Milan utilizou o jogo para testar novos jogadores e formações",
+              "Leeds mostrou evolução tática sob novo comando técnico"
+            ]
+          },
+          {
+            "rank": 6,
+            "search_term": "everton x roma",
+            "search_volume": "5K+",
+            "percentage_increase": "1,000%",
+            "time_started": "5 hours ago",
+            "description": "AS Roma venceu o Everton por 1x0 em amistoso de pré-temporada disputado no Hill Dickinson Stadium em Liverpool, com gol de Matìas Soulè.",
+            "hint": [
+              "AS Roma venceu o Everton por 1x0 em amistoso de pré-temporada",
+              "Jogo foi disputado no Hill Dickinson Stadium em Liverpool",
+              "Matìas Soulè marcou o único gol da partida aos 70 minutos",
+              "Público de 50.000 torcedores presentes no estádio",
+              "Everton fez várias substituições testando elenco para nova temporada",
+              "Roma utilizou o jogo para ajustar esquema tático de José Mourinho",
+              "Partida serviu como preparação final antes do início das competições oficiais"
+            ]
+          },
+          {
+            "rank": 7,
+            "search_term": "bia haddad",
+            "search_volume": "10K+",
+            "percentage_increase": "800%",
+            "time_started": "2 hours ago",
+            "description": "Tenista brasileira Bia Haddad Maia estreia no WTA 1000 de Cincinnati contra a australiana Maya Joint, buscando recuperação após eliminação precoce em Montreal.",
+            "hint": [
+              "Bia Haddad estreia no WTA 1000 de Cincinnati contra Maya Joint",
+              "Jogo está marcado para às 14h40 (horário de Brasília) deste sábado",
+              "Brasileira ocupa atualmente a 21ª posição no ranking mundial da WTA",
+              "Bia vem de eliminação na primeira rodada do torneio de Montreal",
+              "Adversária Maya Joint subiu da 118ª para 45ª posição no ranking em 2025",
+              "Partida terá transmissão ao vivo pelo Disney+ no streaming",
+              "Tenista busca recuperar confiança após derrota para holandesa Suzan Lamens"
+            ]
+          },
+          {
+            "rank": 8,
+            "search_term": "santa cruz",
+            "search_volume": "5K+",
+            "percentage_increase": "400%",
+            "time_started": "1 hour ago",
+            "description": "Santa Cruz decide vaga nas oitavas de final da Série D do Campeonato Brasileiro contra o Sergipe na Arena de Pernambuco, em jogo decisivo da segunda fase.",
+            "hint": [
+              "Santa Cruz enfrenta o Sergipe hoje às 17h na Arena de Pernambuco",
+              "Jogo decide vaga nas oitavas de final da Série D do Brasileirão",
+              "Tricolor coral joga em casa com apoio da torcida pernambucana",
+              "Técnico Marcelo Cabo promete 'postura diferente' para a decisão",
+              "Rokenedy deve ser o goleiro escolhido para a partida decisiva",
+              "Santa Cruz e investidores da SAF chegaram a acordo sobre cessão do Arruda",
+              "Clube busca classificação para continuar sonho de acesso às divisões superiores"
+            ]
+          },
+          {
+            "rank": 9,
+            "search_term": "manchester united x fiorentina",
+            "search_volume": "5K+",
+            "percentage_increase": "1,000%",
+            "time_started": "8 hours ago",
+            "description": "Manchester United empatou 1x1 com a Fiorentina em Old Trafford no último amistoso de pré-temporada, com vitória nos pênaltis para os Red Devils.",
+            "hint": [
+              "Manchester United empatou 1x1 com Fiorentina em Old Trafford",
+              "Simon Sohm abriu o placar para a Fiorentina aos 8 minutos",
+              "Robin Gosens marcou contra e empatou para o United aos 25 minutos",
+              "United venceu nos pênaltis com defesa de Altay Bayindir",
+              "Kobbie Mainoo converteu o pênalti decisivo da vitória inglesa",
+              "Foi o último amistoso de pré-temporada para ambas as equipes",
+              "Jogo serviu como preparação final antes do início da Premier League"
+            ]
+          },
+          {
+            "rank": 10,
+            "search_term": "rangers",
+            "search_volume": "2K+",
+            "percentage_increase": "1,000%",
+            "time_started": "2 hours ago",
+            "description": "Rangers FC venceu o Viktoria Plzen por 3x0 no Ibrox Stadium pela UEFA Champions League, com dois gols de Djeidi Gassama e um pênalti de Cyriel Dessers.",
+            "hint": [
+              "Rangers venceu Viktoria Plzen por 3x0 pela Champions League",
+              "Djeidi Gassama marcou dois gols (15' e 51') sendo o destaque da partida",
+              "Cyriel Dessers converteu pênalti aos 45' do primeiro tempo",
+              "Jogo foi disputado no Ibrox Stadium em Glasgow, Escócia",
+              "Vitória importante para classificação do Rangers na Champions",
+              "Time escocês mostrou superioridade técnica e tática",
+              "Resultado coloca Rangers em boa posição no grupo da competição europeia"
+            ]
+          }
+        ]
+      }
   }
