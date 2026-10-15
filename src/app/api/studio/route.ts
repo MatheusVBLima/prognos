@@ -7,50 +7,51 @@ export async function POST(req: Request) {
   try {
     const { trend, tone, rank, volume, description, hints } = await req.json()
 
-    const hintsText = hints && hints.length > 0
+    // Formatando as hints para o prompt
+    const hintsText = hints && hints.length > 0 
       ? hints.map((hint: string, index: number) => `${index + 1}. ${hint}`).join('\n')
-      : 'No additional information available'
+      : 'Nenhuma informação adicional disponível'
 
     const prompt = `
-Write a TikTok video script about the trend "${trend}".
+Crie um roteiro de vídeo para TikTok sobre a tendência "${trend}".
 
-TREND CONTEXT:
+CONTEXTO DA TENDÊNCIA:
 ${description}
 
-SPECIFIC FACTS:
+INFORMAÇÕES ESPECÍFICAS:
 ${hintsText}
 
-SCRIPT SETTINGS:
-- Ranking position: #${rank}
-- Search volume: ${volume}+
-- Desired tone: ${tone}
+CONFIGURAÇÕES DO ROTEIRO:
+- Posição no ranking: #${rank}
+- Volume de pesquisas: ${volume}+
+- Tom desejado: ${tone}
 
-IMPORTANT INSTRUCTIONS:
-1. Use the facts listed under "SPECIFIC FACTS"
-2. The script should run 30-60 seconds (ideal for TikTok)
-3. Use the requested tone: ${tone}
-4. Be creative and engaging, but stay grounded in the facts provided
-5. Hook the viewer in the first 3 seconds
-6. Use casual, direct language
-7. Add suggested visuals in [brackets]
-8. Structure it as short, dynamic scenes
-9. Do not invent information; only use the data provided
-10. REQUIRED FORMAT: always prefix text to be read aloud with "Narration:". Anything that is not narrated (such as on-screen text) must use a different marker, like "On-screen text:".
+INSTRUÇÕES IMPORTANTES:
+1. Use ESPECIFICAMENTE as informações listadas acima nas "INFORMAÇÕES ESPECÍFICAS"
+2. O roteiro deve ter entre 30-60 segundos (ideal para TikTok)
+3. Use o tom ${tone} solicitado
+4. Seja criativo e engajante, mas baseie-se nos FATOS fornecidos
+5. Inclua ganchos para prender a atenção nos primeiros 3 segundos
+6. Use linguagem casual e direta
+7. Adicione elementos visuais sugeridos entre [colchetes]
+8. Estruture em cenas curtas e dinâmicas
+9. IMPORTANTE: Não invente informações, use apenas os dados fornecidos
+10. PADRÃO OBRIGATÓRIO: Sempre use "Narração:" para indicar o texto que deve ser lido em voz alta. Qualquer texto que não seja para ser narrado (como texto na tela) deve usar outro marcador como "Texto na tela:".
 
-SCRIPT FORMAT:
-**HOOK (0-3s):**
-[Visual description]
-Narration: ...
+FORMATO DO ROTEIRO:
+**GANCHO (0-3s):**
+[Descrição visual]
+Narração: ...
 
-**BODY (3-45s):**
-[Visual description]
-Narration: ...
+**DESENVOLVIMENTO (3-45s):**
+[Descrição visual]
+Narração: ...
 
 **CALL TO ACTION (45-60s):**
-[Visual description]
-Narration: ...
+[Descrição visual]
+Narração: ...
 
-Write the complete script following these guidelines:
+Gere um roteiro completo seguindo essas diretrizes:
 `
 
     const result = streamText({
@@ -61,9 +62,9 @@ Write the complete script following these guidelines:
     return result.toTextStreamResponse()
 
   } catch (error) {
-    console.error('[api/studio] Failed to generate script:', error)
+    console.error('Erro na API:', error)
     return new Response(
-      JSON.stringify({ error: 'Internal server error' }), 
+      JSON.stringify({ error: 'Erro interno do servidor' }), 
       { 
         status: 500,
         headers: { 'Content-Type': 'application/json' }
