@@ -1,6 +1,6 @@
 import "server-only"
 import { cookies } from "next/headers"
-import type { Project } from "@/db/schema"
+import type { Project } from "@/lib/projects/queries"
 
 export const ACTIVE_PROJECT_COOKIE = "prognos_project"
 

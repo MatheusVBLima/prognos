@@ -15,7 +15,7 @@ const optionalText = (max: number) =>
 
 export const projectFormSchema = z.object({
   name: z.string().trim().min(1, "Give your project a name").max(100),
-  websiteUrl: z
+  website_url: z
     .string()
     .trim()
     .transform((value) => (value && !/^https?:\/\//i.test(value) ? `https://${value}` : value))

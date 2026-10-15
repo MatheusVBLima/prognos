@@ -3,7 +3,7 @@ import { notFound } from "next/navigation"
 import { ProjectForm } from "@/components/projects/ProjectForm"
 import { DeleteProjectButton } from "@/components/projects/DeleteProjectButton"
 import { requireUser } from "@/lib/auth"
-import { getProject } from "@/db/queries/projects"
+import { getProject } from "@/lib/projects/queries"
 import { updateProjectAction } from "../actions"
 
 export const metadata: Metadata = { title: "Edit project | Prognos" }
@@ -14,8 +14,8 @@ export default async function EditProjectPage({ params }: PageProps<"/dashboard/
   const { id } = await params
   if (!UUID.test(id)) notFound()
 
-  const user = await requireUser()
-  const project = await getProject(user.id, id)
+  await requireUser()
+  const project = await getProject(id)
   if (!project) notFound()
 
   return (

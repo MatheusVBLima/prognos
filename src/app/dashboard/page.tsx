@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { requireUser } from "@/lib/auth"
-import { listProjects } from "@/db/queries/projects"
+import { listProjects } from "@/lib/projects/queries"
 import { pickActiveProject } from "@/lib/projects/active"
 import { LANGUAGES } from "@/lib/projects/schema"
 
@@ -13,7 +13,7 @@ export const metadata: Metadata = { title: "Overview | Prognos" }
 
 export default async function OverviewPage() {
   const user = await requireUser()
-  const active = await pickActiveProject(await listProjects(user.id))
+  const active = await pickActiveProject(await listProjects())
   const firstName = user.name?.split(" ")[0]
 
   if (!active) {
@@ -52,15 +52,15 @@ export default async function OverviewPage() {
         <CardHeader className="flex flex-row items-start justify-between gap-4">
           <div className="space-y-1.5">
             <CardTitle className="text-2xl">{active.name}</CardTitle>
-            {active.websiteUrl && (
+            {active.website_url && (
               <a
-                href={active.websiteUrl}
+                href={active.website_url}
                 target="_blank"
                 rel="noreferrer"
                 className="flex items-center gap-1 text-sm text-muted-foreground hover:underline"
               >
                 <Globe className="size-3.5" />
-                {active.websiteUrl.replace(/^https?:\/\//, "")}
+                {active.website_url.replace(/^https?:\/\//, "")}
               </a>
             )}
           </div>

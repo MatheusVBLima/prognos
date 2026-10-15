@@ -11,7 +11,7 @@ See the product roadmap in the project plan. This repository currently covers:
 
 ## Stack
 
-Next.js 16 (App Router) · React 19 · shadcn/ui + Tailwind CSS 4 · Supabase (Auth + Postgres) · Drizzle ORM · AI SDK
+Next.js 16 (App Router) · React 19 · shadcn/ui + Tailwind CSS 4 · Supabase (Auth + Postgres with RLS) · AI SDK
 
 ## Getting started
 
@@ -23,11 +23,7 @@ Next.js 16 (App Router) · React 19 · shadcn/ui + Tailwind CSS 4 · Supabase (A
 
 2. Create a Supabase project, then copy `.env.example` to `.env.local` and fill in the values.
 
-3. Apply the database migrations:
-
-   ```bash
-   npm run db:migrate
-   ```
+3. Apply the SQL migrations in `supabase/migrations/` in order, either with the Supabase CLI (`supabase db push`) or by running them in the dashboard's SQL editor.
 
 4. In the Supabase dashboard, under Authentication > URL Configuration, set the Site URL to your app URL and add `http://localhost:3000/auth/callback` (and your production `/auth/callback`) to the redirect URLs. To enable Google sign-in, turn on the Google provider under Authentication > Sign In / Providers.
 
@@ -44,14 +40,13 @@ Next.js 16 (App Router) · React 19 · shadcn/ui + Tailwind CSS 4 · Supabase (A
 | `npm run dev` | Start the dev server |
 | `npm run build` | Production build |
 | `npm run typecheck` | Type-check the project |
-| `npm run db:generate` | Generate a migration from `src/db/schema.ts` |
-| `npm run db:migrate` | Apply pending migrations to `DATABASE_URL` |
-| `npm run db:studio` | Browse the database with Drizzle Studio |
 
 ## Project layout
 
 - `src/app/(auth)`: sign-in and sign-up pages and auth server actions
 - `src/app/dashboard`: the signed-in app (overview, projects, trends, studio)
-- `src/db`: Drizzle schema, client and queries; migrations live in `drizzle/`
+- `supabase/migrations`: SQL migrations (tables, RLS policies, triggers)
+- `src/types/database.ts`: TypeScript types generated from the database schema
+- `src/lib/projects`: project queries, form validation and active-project selection
 - `src/lib/supabase`: Supabase clients for the browser, server and proxy
 - `src/proxy.ts`: refreshes the session and protects `/dashboard`

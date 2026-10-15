@@ -6,7 +6,7 @@ import { redirect } from "next/navigation"
 import { requireUser } from "@/lib/auth"
 import { projectFormSchema } from "@/lib/projects/schema"
 import { ACTIVE_PROJECT_COOKIE } from "@/lib/projects/active"
-import { createProject, deleteProject, getProject, updateProject } from "@/db/queries/projects"
+import { createProject, deleteProject, getProject, updateProject } from "@/lib/projects/queries"
 
 export type ProjectFormState =
   | {
@@ -17,7 +17,7 @@ export type ProjectFormState =
     }
   | undefined
 
-const FIELDS = ["name", "websiteUrl", "description", "niche", "audience", "goals", "language", "country"] as const
+const FIELDS = ["name", "website_url", "description", "niche", "audience", "goals", "language", "country"] as const
 
 function submittedValues(formData: FormData) {
   return Object.fromEntries(FIELDS.map((field) => [field, String(formData.get(field) ?? "")]))
@@ -30,26 +30,26 @@ function parse(formData: FormData) {
 }
 
 export async function createProjectAction(_: ProjectFormState, formData: FormData): Promise<ProjectFormState> {
-  const user = await requireUser()
+  await requireUser()
   const parsed = parse(formData)
   if (!parsed.success) {
     return { fieldErrors: parsed.error.flatten().fieldErrors, values: submittedValues(formData) }
   }
 
-  const project = await createProject(user.id, parsed.data)
+  const project = await createProject(parsed.data)
   ;(await cookies()).set(ACTIVE_PROJECT_COOKIE, project.id, cookieOptions)
   revalidatePath("/dashboard", "layout")
   redirect("/dashboard")
 }
 
 export async function updateProjectAction(id: string, _: ProjectFormState, formData: FormData): Promise<ProjectFormState> {
-  const user = await requireUser()
+  await requireUser()
   const parsed = parse(formData)
   if (!parsed.success) {
     return { fieldErrors: parsed.error.flatten().fieldErrors, values: submittedValues(formData) }
   }
 
-  const project = await updateProject(user.id, id, parsed.data)
+  const project = await updateProject(id, parsed.data)
   if (!project) return { error: "Project not found", values: submittedValues(formData) }
 
   revalidatePath("/dashboard", "layout")
@@ -57,8 +57,8 @@ export async function updateProjectAction(id: string, _: ProjectFormState, formD
 }
 
 export async function deleteProjectAction(id: string) {
-  const user = await requireUser()
-  await deleteProject(user.id, id)
+  await requireUser()
+  await deleteProject(id)
 
   const store = await cookies()
   if (store.get(ACTIVE_PROJECT_COOKIE)?.value === id) store.delete(ACTIVE_PROJECT_COOKIE)
@@ -67,8 +67,8 @@ export async function deleteProjectAction(id: string) {
 }
 
 export async function setActiveProjectAction(id: string) {
-  const user = await requireUser()
-  if (!(await getProject(user.id, id))) return
+  await requireUser()
+  if (!(await getProject(id))) return
 
   ;(await cookies()).set(ACTIVE_PROJECT_COOKIE, id, cookieOptions)
   revalidatePath("/dashboard", "layout")

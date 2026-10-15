@@ -5,13 +5,13 @@ import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { Card, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { requireUser } from "@/lib/auth"
-import { listProjects } from "@/db/queries/projects"
+import { listProjects } from "@/lib/projects/queries"
 
 export const metadata: Metadata = { title: "Projects | Prognos" }
 
 export default async function ProjectsPage() {
-  const user = await requireUser()
-  const projects = await listProjects(user.id)
+  await requireUser()
+  const projects = await listProjects()
 
   return (
     <div className="space-y-6">
@@ -42,10 +42,10 @@ export default async function ProjectsPage() {
               <Card className="h-full transition-colors group-hover:border-primary/50">
                 <CardHeader className="space-y-2">
                   <CardTitle>{project.name}</CardTitle>
-                  {project.websiteUrl && (
+                  {project.website_url && (
                     <span className="flex items-center gap-1 text-sm text-muted-foreground">
                       <Globe className="size-3.5" />
-                      {project.websiteUrl.replace(/^https?:\/\//, "")}
+                      {project.website_url.replace(/^https?:\/\//, "")}
                     </span>
                   )}
                   <CardDescription className="line-clamp-3">{project.description}</CardDescription>

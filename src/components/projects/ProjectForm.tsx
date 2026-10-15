@@ -11,7 +11,7 @@ import { Textarea } from "@/components/ui/textarea"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { LANGUAGES } from "@/lib/projects/schema"
 import type { ProjectFormState } from "@/app/dashboard/projects/actions"
-import type { Project } from "@/db/schema"
+import type { Project } from "@/lib/projects/queries"
 
 type Props = {
   action: (state: ProjectFormState, formData: FormData) => Promise<ProjectFormState>
@@ -61,17 +61,17 @@ export function ProjectForm({ action, project, submitLabel }: Props) {
           </Field>
 
           <Field
-            id="websiteUrl"
+            id="website_url"
             label="Website (optional)"
             hint="If your project has a landing page, we'll use it to learn about your brand."
-            errors={errors.websiteUrl}
+            errors={errors.website_url}
           >
             <Input
-              id="websiteUrl"
-              name="websiteUrl"
+              id="website_url"
+              name="website_url"
               type="text"
               inputMode="url"
-              defaultValue={value("websiteUrl")}
+              defaultValue={value("website_url")}
               placeholder="example.com"
             />
           </Field>

@@ -5,12 +5,12 @@ import { Separator } from "@/components/ui/separator"
 import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar"
 import { DashboardProvider } from "@/contexts/DashboardContext"
 import { requireUser } from "@/lib/auth"
-import { listProjects } from "@/db/queries/projects"
+import { listProjects } from "@/lib/projects/queries"
 import { pickActiveProject } from "@/lib/projects/active"
 
 export default async function DashboardLayout({ children }: { children: React.ReactNode }) {
   const user = await requireUser()
-  const projects = await listProjects(user.id)
+  const projects = await listProjects()
   const active = await pickActiveProject(projects)
 
   return (
