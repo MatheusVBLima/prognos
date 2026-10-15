@@ -34,7 +34,7 @@ export function TrendCard({
   const [isExpanded, setIsExpanded] = useState(false)
 
   const formatNumber = (num: number) => {
-    return num.toLocaleString('pt-BR');
+    return num.toLocaleString('en-US');
   }
 
   const getRankColor = (rank?: number) => {
@@ -73,11 +73,11 @@ export function TrendCard({
                             <TooltipTrigger asChild>
                               <Badge variant="outline" className="cursor-help">
                                 <Eye className="w-4 h-4 mr-1.5" />
-                                {formatNumber(value)}+ pesquisas
+                                {formatNumber(value)}+ searches
                               </Badge>
                             </TooltipTrigger>
                             <TooltipContent>
-                              <p>Volume de pesquisas nas últimas 24 horas</p>
+                              <p>Search volume in the past 24 hours</p>
                             </TooltipContent>
                           </Tooltip>
                         </TooltipProvider>
@@ -92,7 +92,7 @@ export function TrendCard({
                                 </Badge>
                               </TooltipTrigger>
                               <TooltipContent>
-                                <p>Aumento percentual em relação ao período anterior</p>
+                                <p>Percentage increase over the previous period</p>
                               </TooltipContent>
                             </Tooltip>
                           </TooltipProvider>
@@ -108,7 +108,7 @@ export function TrendCard({
                                 </Badge>
                               </TooltipTrigger>
                               <TooltipContent>
-                                <p>Tempo desde o início da tendência</p>
+                                <p>Time since the trend started</p>
                               </TooltipContent>
                             </Tooltip>
                           </TooltipProvider>
@@ -149,7 +149,7 @@ export function TrendCard({
                       transition={{ delay: 0.1, duration: 0.3 }}
                     >
                       <h4 className="font-semibold text-sm text-muted-foreground uppercase tracking-wide">
-                        Descrição
+                        Description
                       </h4>
                       <p className="text-sm leading-relaxed">
                         {description}
@@ -165,7 +165,7 @@ export function TrendCard({
                       transition={{ delay: 0.2, duration: 0.3 }}
                     >
                       <h4 className="font-semibold text-sm text-muted-foreground uppercase tracking-wide">
-                        Principais Informações
+                        Key facts
                       </h4>
                       <div className="space-y-2">
                         {hint.map((item, index) => (
@@ -193,7 +193,7 @@ export function TrendCard({
                      transition={{ delay: 0.4, duration: 0.3 }}
                    >
                      <Badge variant="outline" className="text-xs">
-                       Volume: {formatNumber(value)}+ pesquisas
+                       Volume: {formatNumber(value)}+ searches
                      </Badge>
                      {percentage_increase && (
                        <Badge variant="outline" className="text-xs">
@@ -221,7 +221,7 @@ export function TrendCard({
                      <Link href={`/dashboard/studio?trend=${encodeURIComponent(term)}&rank=${rank}&volume=${value}&description=${encodeURIComponent(description || '')}&hints=${encodeURIComponent(JSON.stringify(hint || []))}`}>
                        <Button className="w-full gap-2">
                          <Video className="w-4 h-4" />
-                         Usar essa trend para criar roteiro
+                         Use this trend for a script
                        </Button>
                      </Link>
                    </motion.div>

@@ -9,7 +9,7 @@ export async function POST(req: Request) {
       return new Response('Text and voice are required', { status: 400 })
     }
 
-    // Instanciado sob demanda para não exigir a chave durante o build
+    // Created per request so builds don't require the API key
     const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY })
     const mp3 = await openai.audio.speech.create({
       model: 'tts-1',
@@ -22,12 +22,12 @@ export async function POST(req: Request) {
     return new Response(buffer, {
       headers: {
         'Content-Type': 'audio/mpeg',
-        'Content-Disposition': 'attachment; filename="roteiro-audio.mp3"',
+        'Content-Disposition': 'attachment; filename="script-audio.mp3"',
       },
     })
 
   } catch (error) {
-    console.error('Erro no TTS:', error)
-    return new Response('Erro interno do servidor', { status: 500 })
+    console.error('[api/tts] Failed to generate audio:', error)
+    return new Response('Internal server error', { status: 500 })
   }
 } 

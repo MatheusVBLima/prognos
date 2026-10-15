@@ -1,96 +1,52 @@
-# Prognos - Dashboard de Tendências
+# Prognos
 
-Um dashboard avançado para análise de tendências do Google Trends em tempo real, powered by **Browserbase** para web scraping inteligente.
+Trend-driven content for creators. Prognos learns what your project is about, finds what's trending in your niche, and helps you turn it into scripts, posts and carousels with AI.
 
-## 🚀 Funcionalidades
+See the product roadmap in the project plan. This repository currently covers:
 
-- ✅ **Scraping em tempo real** do Google Trends via Browserbase
-- ✅ **Análise por país** (Brasil, EUA, Reino Unido, Alemanha, etc.)
-- ✅ **Contexto inteligente** para cada tendência via pesquisa automatizada
-- ✅ **Interface moderna** com Next.js 15 + React 19
-- ✅ **Dados estruturados** com descrições e insights
-- ✅ **Dashboard interativo** com gráficos e filtros
+- Accounts with Supabase Auth (email/password and Google)
+- Projects: the products, brands or channels a user creates content for
+- A trends dashboard (sample data for now; live per-niche sources come next)
+- A script studio that writes short-form video scripts with Gemini and narrates them with OpenAI TTS
 
-## 📋 Pré-requisitos
+## Stack
 
-1. **Node.js 18+**
-2. **Conta no Browserbase** (gratuita)
-3. **API Key do Browserbase**
+Next.js 16 (App Router) · React 19 · shadcn/ui + Tailwind CSS 4 · Supabase (Auth + Postgres with RLS) · AI SDK
 
-## 🛠️ Instalação
+## Getting started
 
-1. **Clone o repositório:**
-```bash
-git clone <repo-url>
-cd prognos
-```
+1. Install dependencies:
 
-2. **Instale as dependências:**
-```bash
-npm install
-```
+   ```bash
+   npm install
+   ```
 
-3. **Configure o Browserbase:**
-```bash
-# Crie o arquivo .env.local baseado no exemplo
-# Adicione suas credenciais:
-BROWSERBASE_API_KEY=your_api_key_here
-BROWSERBASE_PROJECT_ID=your_project_id_here
-```
+2. Create a Supabase project, then copy `.env.example` to `.env.local` and fill in the values.
 
-4. **Teste a configuração:**
-```bash
-npm run test:browserbase
-```
+3. Apply the SQL migrations in `supabase/migrations/` in order, either with the Supabase CLI (`supabase db push`) or by running them in the dashboard's SQL editor.
 
-5. **Inicie o servidor:**
-```bash
-npm run dev
-```
+4. In the Supabase dashboard, under Authentication > URL Configuration, set the Site URL to your app URL and add `http://localhost:3000/auth/callback` (and your production `/auth/callback`) to the redirect URLs. To enable Google sign-in, turn on the Google provider under Authentication > Sign In / Providers.
 
-## 🎯 Como Usar
+5. Start the dev server:
 
-1. Acesse [http://localhost:3000](http://localhost:3000)
-2. Vá para o Dashboard de Tendências
-3. **Selecione os filtros** (país, período, categoria)
-4. **Clique em "Aplicar Filtros"**
-5. **Aguarde** o scraping dos dados reais (alguns segundos)
-6. **Explore** as tendências com contexto inteligente!
+   ```bash
+   npm run dev
+   ```
 
-## 🔧 Configuração do Browserbase
+## Scripts
 
-Veja o arquivo `BROWSERBASE_SETUP.md` para instruções detalhadas sobre:
-- Como criar conta no Browserbase
-- Configurar variáveis de ambiente
-- Troubleshooting comum
+| Command | What it does |
+|---|---|
+| `npm run dev` | Start the dev server |
+| `npm run build` | Production build |
+| `npm run typecheck` | Type-check the project |
 
-## 🏗️ Tecnologias
+## Project layout
 
-- **Next.js 15** - Framework React
-- **React 19** - Biblioteca de UI
-- **Browserbase** - Web scraping infrastructure
-- **Puppeteer** - Browser automation
-- **TanStack Query** - Data fetching
-- **Tailwind CSS** - Styling
-- **Radix UI** - Component primitives
-
-## 📚 API Routes
-
-- `GET /api/trends` - Buscar tendências (com/sem Browserbase)
-- `POST /api/trends/scrape` - Scraping direto via Browserbase
-
-## 🤝 Contribuição
-
-1. Fork o projeto
-2. Crie uma branch para sua feature
-3. Commit suas mudanças
-4. Push para a branch
-5. Abra um Pull Request
-
-## 📄 Licença
-
-Este projeto está sob a licença MIT.
-
----
-
-**Desenvolvido com ❤️ usando Browserbase para web scraping inteligente**
+- `src/app/(auth)`: sign-in and sign-up pages and auth server actions
+- `src/app/dashboard`: the signed-in app (overview, projects, trends, studio)
+- `supabase/migrations`: SQL migrations (tables, RLS policies, triggers)
+- `src/types/database.ts`: TypeScript types generated from the database schema
+- `src/lib/projects`: project queries, form validation and active-project selection
+- `src/lib/supabase`: Supabase clients for the browser, server and proxy
+- `src/proxy.ts`: refreshes the session and protects `/dashboard`

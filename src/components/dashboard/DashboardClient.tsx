@@ -27,10 +27,10 @@ interface DashboardClientProps {
 
 export default function DashboardClient({ 
   initialFilters = {
-    country: "Brasil",
-    period: "Últimas 24 horas",
-    category: "Todas as categorias",
-    sort: "Por relevância"
+    country: "Brazil",
+    period: "Past 24 hours",
+    category: "All categories",
+    sort: "Relevance"
   } 
 }: DashboardClientProps) {
   const {
@@ -90,14 +90,14 @@ export default function DashboardClient({
   const averageVolume = safeData.length > 0 ? Math.round(totalVolume / safeData.length) : 0
   const topTrend = safeData.length > 0 ? safeData[0] : null
 
-  const formatNumber = (num: number) => num.toLocaleString('pt-BR')
+  const formatNumber = (num: number) => num.toLocaleString('en-US')
   
   return (
     <div className="space-y-8" style={{ opacity: isRefreshing ? 0.8 : 1 }}>
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-4xl font-bold">Dashboard de Tendências</h1>
-          <p className="text-muted-foreground mt-2">Explore as tendências mais populares em tempo real</p>
+          <h1 className="text-4xl font-bold">Trends dashboard</h1>
+          <p className="text-muted-foreground mt-2">Explore what's trending right now</p>
         </div>
         <Button 
           variant="default" 
@@ -106,7 +106,7 @@ export default function DashboardClient({
           className="gap-2"
         >
           {isLoading ? <Loader2 className="h-4 w-4 animate-spin" /> : <Globe className="h-4 w-4" />}
-          {isLoading ? 'Buscando...' : 'Aplicar Filtros'}
+          {isLoading ? 'Searching...' : 'Apply filters'}
         </Button>
       </div>
 
@@ -129,8 +129,8 @@ export default function DashboardClient({
           <div className="mx-auto w-24 h-24 bg-muted rounded-full flex items-center justify-center mb-4">
             <Globe className="h-8 w-8 text-muted-foreground" />
           </div>
-          <h3 className="text-lg font-semibold mb-2">Selecione os filtros para começar</h3>
-          <p className="text-muted-foreground mb-4">Escolha um país e um período para ver as tendências.</p>
+          <h3 className="text-lg font-semibold mb-2">Choose your filters to get started</h3>
+          <p className="text-muted-foreground mb-4">Pick a country and a period to see the trends.</p>
         </div>
       )}
       
@@ -139,25 +139,25 @@ export default function DashboardClient({
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <Card>
               <CardContent className="pt-6">
-                <div className="flex items-center space-x-2"><TrendingUp className="h-5 w-5 text-green-600" /><div><p className="text-sm font-medium text-muted-foreground">Top Tendência</p><p className="text-2xl font-bold">{topTrend?.term}</p><p className="text-sm text-muted-foreground">{formatNumber(topTrend?.value || 0)}+ pesquisas</p></div></div>
+                <div className="flex items-center space-x-2"><TrendingUp className="h-5 w-5 text-green-600" /><div><p className="text-sm font-medium text-muted-foreground">Top trend</p><p className="text-2xl font-bold">{topTrend?.term}</p><p className="text-sm text-muted-foreground">{formatNumber(topTrend?.value || 0)}+ searches</p></div></div>
               </CardContent>
             </Card>
             <Card>
               <CardContent className="pt-6">
-                <div className="flex items-center space-x-2"><Eye className="h-5 w-5 text-blue-600" /><div><p className="text-sm font-medium text-muted-foreground">Volume Total</p><p className="text-2xl font-bold">{formatNumber(totalVolume)}</p><p className="text-sm text-muted-foreground">pesquisas combinadas</p></div></div>
+                <div className="flex items-center space-x-2"><Eye className="h-5 w-5 text-blue-600" /><div><p className="text-sm font-medium text-muted-foreground">Total volume</p><p className="text-2xl font-bold">{formatNumber(totalVolume)}</p><p className="text-sm text-muted-foreground">combined searches</p></div></div>
               </CardContent>
             </Card>
             <Card>
               <CardContent className="pt-6">
-                <div className="flex items-center space-x-2"><BarChart3 className="h-5 w-5 text-purple-600" /><div><p className="text-sm font-medium text-muted-foreground">Média por Tendência</p><p className="text-2xl font-bold">{formatNumber(averageVolume)}</p><p className="text-sm text-muted-foreground">pesquisas em média</p></div></div>
+                <div className="flex items-center space-x-2"><BarChart3 className="h-5 w-5 text-purple-600" /><div><p className="text-sm font-medium text-muted-foreground">Average per trend</p><p className="text-2xl font-bold">{formatNumber(averageVolume)}</p><p className="text-sm text-muted-foreground">searches on average</p></div></div>
               </CardContent>
             </Card>
           </div>
 
           <Tabs value={activeTab} onValueChange={(value) => setActiveTab(value as 'list' | 'charts')} className="space-y-6">
             <TabsList className="grid w-full grid-cols-2">
-              <TabsTrigger value="list">Lista Detalhada</TabsTrigger>
-              <TabsTrigger value="charts">Visualizações</TabsTrigger>
+              <TabsTrigger value="list">Detailed list</TabsTrigger>
+              <TabsTrigger value="charts">Charts</TabsTrigger>
             </TabsList>
 
             <TabsContent value="list" className="space-y-6">
@@ -170,7 +170,7 @@ export default function DashboardClient({
 
             <TabsContent value="charts" className="space-y-6">
               <Card>
-                <CardHeader><CardTitle>Volume de Pesquisas por Tendência</CardTitle></CardHeader>
+                <CardHeader><CardTitle>Search volume by trend</CardTitle></CardHeader>
                 <CardContent><TrendChart data={safeData} type={chartType} /></CardContent>
               </Card>
             </TabsContent>

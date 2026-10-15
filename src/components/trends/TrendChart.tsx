@@ -1,6 +1,5 @@
 "use client"
 
-import { useEffect } from "react"
 import { Bar, BarChart, CartesianGrid, XAxis, YAxis } from "recharts"
 import {
   ChartConfig,
@@ -9,7 +8,7 @@ import {
   ChartTooltipContent,
 } from "@/components/ui/chart"
 
-// Definindo o tipo para os dados
+// Shape of the chart data
 interface TrendDataPoint {
   term: string
   value: number
@@ -23,35 +22,30 @@ interface TrendChartProps {
   type?: 'bar' | 'line'
 }
 
-// Função para formatar o número
+// Number formatting
 const formatNumber = (num: number) => {
-  return num.toLocaleString('pt-BR');
+  return num.toLocaleString('en-US');
 }
 
-// Configuração do gráfico usando as cores CSS adequadas
+// Chart config using theme CSS colors
 const chartConfig = {
   volume: {
-    label: "Volume de Pesquisas",
+    label: "Search volume",
     color: "var(--chart-1)",
   },
 } satisfies ChartConfig
 
 export function TrendChart({ data }: TrendChartProps) {
-  // Debug - analisar estrutura de dados
-  useEffect(() => {
-    console.log("TrendChart dados recebidos:", data)
-  }, [data])
-
-  // Verificar se temos dados válidos
+  // Bail out when there is nothing to plot
   if (!data || data.length === 0) {
     return (
       <div className="flex items-center justify-center h-full text-muted-foreground">
-        Nenhum dado disponível para análise
+        No data available
       </div>
     )
   }
 
-  // Preparar dados para o gráfico seguindo padrão shadcn/ui
+  // Map items to the shadcn/ui chart format
   const chartData = data
     .slice(0, 10)
     .map((item) => ({

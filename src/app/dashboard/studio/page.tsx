@@ -2,8 +2,8 @@ import { Metadata } from 'next'
 import StudioClient from '@/components/dashboard/StudioClient'
 
 export const metadata: Metadata = {
-  title: 'Studio de Roteiros | Prognos',
-  description: 'Crie roteiros para TikTok com IA baseados em tendências populares',
+  title: 'Script Studio | Prognos',
+  description: 'Write AI-generated TikTok scripts based on trending topics',
 }
 
 export default function StudioPage() {
