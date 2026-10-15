@@ -20,8 +20,8 @@ const ptSans = PT_Sans({
 });
 
 export const metadata: Metadata = {
-  title: "Prognos - Tendências em Tempo Real",
-  description: "Descubra as tendências mais populares e monitore termos de pesquisa em tempo real",
+  title: "Prognos: trend-driven content for creators",
+  description: "Find what's trending in your niche and turn it into scripts, posts and carousels with AI.",
 };
 
 export default function RootLayout({
@@ -30,7 +30,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="pt-BR" >
+    <html lang="en">
       <body className={cn(
         "bg-background min-h-screen font-sans antialiased", 
         `${nunito.variable} ${ptSans.variable}`

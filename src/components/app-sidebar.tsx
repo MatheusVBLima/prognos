@@ -1,71 +1,36 @@
 "use client"
 
 import * as React from "react"
-import {
-  BarChart3, Brain, TrendingUp
-} from "lucide-react"
+import { Brain, FolderKanban, LayoutDashboard, TrendingUp } from "lucide-react"
+import { NavMain, type NavItem } from "@/components/nav-main"
+import { NavUser, type NavUserData } from "@/components/nav-user"
+import { ProjectSwitcher, type ProjectSummary } from "@/components/project-switcher"
+import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarRail } from "@/components/ui/sidebar"
 
-import { NavMain } from "@/components/nav-main"
-import { NavUser } from "@/components/nav-user"
-import { TeamSwitcher } from "@/components/team-switcher"
-import {
-  Sidebar,
-  SidebarContent,
-  SidebarFooter,
-  SidebarHeader,
-  SidebarRail,
-} from "@/components/ui/sidebar"
+const navItems: NavItem[] = [
+  { title: "Overview", url: "/dashboard", icon: LayoutDashboard, exact: true },
+  { title: "Projects", url: "/dashboard/projects", icon: FolderKanban },
+  { title: "Trends", url: "/dashboard/trends", icon: TrendingUp },
+  { title: "Studio", url: "/dashboard/studio", icon: Brain },
+]
 
-const data = {
-  user: {
-    name: "Usuário",
-    email: "usuario@exemplo.com",
-    avatar: "/avatars/user.jpg",
-  },
-  teams: [
-    {
-      name: "Prognos",
-      logo: TrendingUp,
-      plan: "Gratuito",
-    }
-  ],
-  navMain: [
-    {
-      title: "Dashboard",
-      url: "/dashboard",
-      icon: BarChart3,
-      isActive: true,
-      items: [
-        {
-          title: "Visão Geral",
-          icon: BarChart3,
-          url: "/dashboard",
-        },
-        {
-          title: "Studio IA",
-          icon: Brain,
-          url: "/dashboard/studio",
-        },
-       
-      ],
-    },
-    
-  ],
- 
+type Props = React.ComponentProps<typeof Sidebar> & {
+  user: NavUserData
+  projects: ProjectSummary[]
+  activeProjectId: string | null
 }
 
-export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+export function AppSidebar({ user, projects, activeProjectId, ...props }: Props) {
   return (
     <Sidebar collapsible="icon" {...props}>
       <SidebarHeader>
-        <TeamSwitcher teams={data.teams} />
+        <ProjectSwitcher projects={projects} activeId={activeProjectId} />
       </SidebarHeader>
       <SidebarContent>
-        <NavMain items={data.navMain} />
-       
+        <NavMain items={navItems} />
       </SidebarContent>
       <SidebarFooter>
-        <NavUser user={data.user} />
+        <NavUser user={user} />
       </SidebarFooter>
       <SidebarRail />
     </Sidebar>

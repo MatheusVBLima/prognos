@@ -1,40 +1,37 @@
 "use client"
 
+import { usePathname } from "next/navigation"
+import { useQueryState } from "nuqs"
 import { SidebarTrigger } from "@/components/ui/sidebar"
 import { ThemeSwitcher } from "@/components/theme/ThemeSwitcher"
 import { BreadcrumbSection } from "@/components/BreadcrumbSection"
-import { usePathname } from "next/navigation"
-import { useQueryState } from "nuqs"
+
+const SECTIONS: { prefix: string; label: string }[] = [
+  { prefix: "/dashboard/projects", label: "Projects" },
+  { prefix: "/dashboard/trends", label: "Trends" },
+  { prefix: "/dashboard/studio", label: "Script Studio" },
+]
 
 export function HeaderDashboard() {
-	const pathname = usePathname()
-	const [trend] = useQueryState('trend')
+  const pathname = usePathname()
+  const [trend] = useQueryState("trend")
 
-	// Gerar breadcrumbs baseado na rota atual
-	const getBreadcrumbs = () => {
-		const breadcrumbs = [
-			{ label: "Dashboard", href: "/dashboard" }
-		]
+  const breadcrumbs: { label: string; href?: string }[] = [{ label: "Dashboard", href: "/dashboard" }]
+  const section = SECTIONS.find((s) => pathname.startsWith(s.prefix))
+  if (section) breadcrumbs.push({ label: section.label, href: section.prefix })
+  if (pathname === "/dashboard/projects/new") breadcrumbs.push({ label: "New project" })
+  else if (pathname.startsWith("/dashboard/projects/")) breadcrumbs.push({ label: "Edit project" })
+  if (section?.prefix === "/dashboard/studio" && trend) breadcrumbs.push({ label: trend })
 
-		if (pathname.includes("/studio")) {
-			breadcrumbs.push({ 
-				label: trend ? `Studio - ${trend}` : "Studio de Roteiros",
-				href: pathname // Use a rota atual como href
-			})
-		}
-
-		return breadcrumbs
-	}
-
-	return (
-		<header className="flex items-center justify-between w-full py-4">
-			<div className="flex items-center space-x-4">
-				<SidebarTrigger className="-ml-1" />
-				<BreadcrumbSection items={getBreadcrumbs()} />
-			</div>
-			<div className="flex items-center space-x-4">
-				<ThemeSwitcher />
-			</div>
-		</header>
-	)
+  return (
+    <header className="flex w-full items-center justify-between py-4">
+      <div className="flex items-center space-x-4">
+        <SidebarTrigger className="-ml-1" />
+        <BreadcrumbSection items={breadcrumbs} />
+      </div>
+      <div className="flex items-center space-x-4">
+        <ThemeSwitcher />
+      </div>
+    </header>
+  )
 }

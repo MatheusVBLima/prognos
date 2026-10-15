@@ -14,38 +14,38 @@ import Link from "next/link"
 import { motion } from "framer-motion"
 
 const voiceOptions = [
-  { id: "alloy", name: "Alloy", description: "Voz equilibrada e versátil, boa para qualquer tipo de conteúdo" },
-  { id: "echo", name: "Echo", description: "Voz masculina clara e profissional, ideal para tutoriais" },
-  { id: "fable", name: "Fable", description: "Voz feminina calorosa, perfeita para storytelling" },
-  { id: "onyx", name: "Onyx", description: "Voz masculina profunda e autoritativa" },
-  { id: "nova", name: "Nova", description: "Voz feminina jovem e energética, ideal para TikTok" },
-  { id: "shimmer", name: "Shimmer", description: "Voz feminina suave e elegante" },
+  { id: "alloy", name: "Alloy", description: "Balanced, versatile voice that works for any content" },
+  { id: "echo", name: "Echo", description: "Clear, professional male voice, great for tutorials" },
+  { id: "fable", name: "Fable", description: "Warm female voice, perfect for storytelling" },
+  { id: "onyx", name: "Onyx", description: "Deep, authoritative male voice" },
+  { id: "nova", name: "Nova", description: "Young, energetic female voice, great for TikTok" },
+  { id: "shimmer", name: "Shimmer", description: "Soft, elegant female voice" },
 ]
 
 export default function StudioClient() {
-  // Usando nuqs para gerenciar search parameters de forma type-safe
+  // Type-safe search params via nuqs
   const [trend] = useQueryState('trend')
   const [rank] = useQueryState('rank')
   const [volume] = useQueryState('volume')
   const [description] = useQueryState('description')
   const [hintsParam] = useQueryState('hints')
   
-  // Parsing seguro dos hints
+  // Parse hints passed through the URL
   const hints = hintsParam ? JSON.parse(decodeURIComponent(hintsParam)) : []
 
-  // Verificar se há dados de trend
+  // Whether a trend was passed in
   const hasTrendData = trend && description
 
   const [tone, setTone] = useState("")
   const [script, setScript] = useState("")
   const [isGenerating, setIsGenerating] = useState(false)
-  const [selectedVoice, setSelectedVoice] = useState(voiceOptions[4]) // Nova por padrão para TikTok
+  const [selectedVoice, setSelectedVoice] = useState(voiceOptions[4]) // Nova by default for TikTok
   const [isVoiceDialogOpen, setIsVoiceDialogOpen] = useState(false)
   const [isGeneratingAudio, setIsGeneratingAudio] = useState(false)
   const [audioUrl, setAudioUrl] = useState<string | null>(null)
   const [isEditing, setIsEditing] = useState(false)
 
-  // Função para extrair apenas o texto falado do roteiro
+  // Extract only the spoken lines from the script
   const extractSpokenText = (fullScript: string) => {
     const lines = fullScript.split('\n')
     const spokenLines: string[] = []
@@ -53,25 +53,19 @@ export default function StudioClient() {
     for (const line of lines) {
       const trimmedLine = line.trim()
       
-      // Padroniza a linha para minúsculas para a verificação
       const lowerLine = trimmedLine.toLowerCase()
       
-      // Procura pela palavra-chave "narração:" no início da linha
-      if (lowerLine.startsWith('narração:')) {
-        // Remove a palavra-chave e espaços em branco, mantendo o resto da linha
-        const cleanText = trimmedLine.substring('narração:'.length).trim()
+      // Spoken lines start with "Narration:"
+      if (lowerLine.startsWith('narration:')) {
+        const cleanText = trimmedLine.substring('narration:'.length).trim()
         
-        // Adiciona o texto limpo se não estiver vazio
         if (cleanText) {
           spokenLines.push(cleanText)
         }
       }
     }
     
-    // Junta todas as linhas de narração com um espaço
-    const result = spokenLines.join(' ').trim()
-    console.log('Texto extraído para áudio:', result)
-    return result
+    return spokenLines.join(' ').trim()
   }
 
   const generateScript = async () => {
@@ -100,7 +94,7 @@ export default function StudioClient() {
         setScript(prev => prev + chunk)
       }
     } catch (error) {
-      console.error('Erro ao gerar roteiro:', error)
+      console.error('Failed to generate script:', error)
     } finally {
       setIsGenerating(false)
     }
@@ -112,13 +106,10 @@ export default function StudioClient() {
     setIsGeneratingAudio(true)
     
     try {
-      // Extrair apenas o texto falado
       const spokenText = extractSpokenText(script)
       
-      console.log('Texto extraído para áudio:', spokenText)
-      
       if (!spokenText.trim()) {
-        alert('Nenhum texto falado encontrado no roteiro! Verifique se há texto sem marcadores de cena.')
+        alert('No spoken text found in the script. Make sure narration lines start with "Narration:".')
         return
       }
 
@@ -136,10 +127,10 @@ export default function StudioClient() {
         const url = URL.createObjectURL(audioBlob)
         setAudioUrl(url)
       } else {
-        console.error('Erro ao gerar áudio')
+        console.error('Failed to generate audio')
       }
     } catch (error) {
-      console.error('Erro ao gerar áudio:', error)
+      console.error('Failed to generate audio:', error)
     } finally {
       setIsGeneratingAudio(false)
     }
@@ -163,14 +154,14 @@ export default function StudioClient() {
     const url = URL.createObjectURL(blob)
     const a = document.createElement('a')
     a.href = url
-    a.download = `${trend}-roteiro.txt`
+    a.download = `${trend}-script.txt`
     document.body.appendChild(a)
     a.click()
     document.body.removeChild(a)
     URL.revokeObjectURL(url)
   }
 
-  // Se não há dados de trend, mostrar tela de seleção
+  // No trend selected yet: point the user to the dashboard
   if (!hasTrendData) {
     return (
       <div className="min-h-screen bg-background flex items-center justify-center">
@@ -189,24 +180,24 @@ export default function StudioClient() {
                 </div>
                 
                 <h1 className="text-3xl font-bold mb-4">
-                  Studio de Roteiros
+                  Script Studio
                 </h1>
                 
                 <p className="text-lg text-muted-foreground mb-8 max-w-md mx-auto">
-                  Para começar a criar roteiros, você precisa selecionar uma tendência no dashboard principal.
+                  To start writing scripts, pick a trend on the Trends page first.
                 </p>
                 
                 <div className="space-y-4">
-                  <Link href="/dashboard">
+                  <Link href="/dashboard/trends">
                     <Button className="gap-2" size="lg">
                       <TrendingUp className="w-5 h-5" />
-                      Explorar Tendências
+                      Explore trends
                     </Button>
                   </Link>
                   
                   <p className="text-sm text-muted-foreground">
-                    Navegue pelas tendências populares e clique em "Usar essa trend para criar roteiro" 
-                    para gerar conteúdo personalizado para TikTok.
+                    Browse the trending topics and click "Use this trend for a script"
+                    to generate tailored TikTok content.
                   </p>
                 </div>
               </motion.div>
@@ -224,11 +215,11 @@ export default function StudioClient() {
         <div className="container mx-auto px-4 py-4">
           <div className="flex items-center gap-4">
             <div className="flex-1">
-              <h1 className="text-2xl font-bold">Studio de Roteiros</h1>
+              <h1 className="text-2xl font-bold">Script Studio</h1>
               <div className="flex items-center gap-2 mt-1">
                 <Badge variant="outline">{trend}</Badge>
                 <Badge variant="secondary">#{rank}</Badge>
-                <Badge variant="outline">{volume}+ pesquisas</Badge>
+                <Badge variant="outline">{volume}+ searches</Badge>
               </div>
             </div>
           </div>
@@ -245,7 +236,7 @@ export default function StudioClient() {
               <CardTitle className="flex items-center justify-between">
                 <div className="flex items-center gap-2">
                   <Play className="w-5 h-5" />
-                  Preview do Roteiro
+                  Script preview
                 </div>
                 {script && (
                   <Button
@@ -256,12 +247,12 @@ export default function StudioClient() {
                     {isEditing ? (
                       <>
                         <Save className="w-4 h-4 mr-2" />
-                        Salvar
+                        Save
                       </>
                     ) : (
                       <>
                         <Edit3 className="w-4 h-4 mr-2" />
-                        Editar
+                        Edit
                       </>
                     )}
                   </Button>
@@ -276,7 +267,7 @@ export default function StudioClient() {
                       <motion.div animate={{ rotate: 360 }} transition={{ duration: 2, repeat: Infinity, ease: "linear" }}>
                         <Wand2 className="w-8 h-8 mx-auto mb-2 text-primary" />
                       </motion.div>
-                      <p className="text-muted-foreground">Gerando roteiro...</p>
+                      <p className="text-muted-foreground">Generating script...</p>
                     </div>
                   </div>
                 ) : script ? (
@@ -285,7 +276,7 @@ export default function StudioClient() {
                       value={script}
                       onChange={(e) => setScript(e.target.value)}
                       className="w-full h-full min-h-[360px] resize-none border-none bg-transparent text-sm font-mono"
-                      placeholder="Edite seu roteiro aqui..."
+                      placeholder="Edit your script here..."
                     />
                   ) : (
                     <div className="prose prose-sm max-w-none whitespace-pre-wrap">{script}</div>
@@ -294,23 +285,23 @@ export default function StudioClient() {
                   <div className="flex items-center justify-center h-full text-muted-foreground">
                     <div className="text-center">
                       <Wand2 className="w-12 h-12 mx-auto mb-4 opacity-50" />
-                      <p>Defina o tom e clique em "Gerar Roteiro" para começar</p>
+                      <p>Set a tone and click "Generate script" to begin</p>
                     </div>
                   </div>
                 )}
               </div>
               
-              {/* Player de Áudio */}
+              {/* Audio player */}
               {audioUrl && (
                 <div className="space-y-2">
                   <Label className="flex items-center gap-2">
                     <Headphones className="w-4 h-4" />
-                    Áudio gerado com {selectedVoice.name}
+                    Audio generated with {selectedVoice.name}
                   </Label>
                   <div className="flex items-center gap-2">
                     <audio controls className="flex-1">
                       <source src={audioUrl} type="audio/mpeg" />
-                      Seu navegador não suporta o elemento de áudio.
+                      Your browser does not support the audio element.
                     </audio>
                     <Button onClick={downloadAudio} variant="outline" size="sm">
                       <Download className="w-4 h-4" />
@@ -324,31 +315,31 @@ export default function StudioClient() {
           {/* Controls Card */}
           <Card>
             <CardHeader>
-              <CardTitle>Configurações</CardTitle>
+              <CardTitle>Settings</CardTitle>
             </CardHeader>
             <CardContent className="space-y-6">
               
-              {/* Tom do Roteiro */}
+              {/* Script tone */}
               <div className="space-y-2">
-                <Label htmlFor="tone">1. Tom do Roteiro</Label>
+                <Label htmlFor="tone">1. Script tone</Label>
                 <Textarea
                   id="tone"
-                  placeholder="Ex: quero um vídeo cômico, informativo, dramático..."
+                  placeholder="e.g. funny, informative, dramatic..."
                   value={tone}
                   onChange={(e) => setTone(e.target.value)}
                   rows={3}
                 />
                 <Button onClick={generateScript} disabled={!tone.trim() || isGenerating} className="w-full">
                   <Wand2 className="w-4 h-4 mr-2" />
-                  {isGenerating ? 'Gerando...' : 'Gerar Roteiro'}
+                  {isGenerating ? 'Generating...' : 'Generate script'}
                 </Button>
               </div>
 
               <Separator />
 
-              {/* Escolha de Voz */}
+              {/* Voice */}
               <div className="space-y-2">
-                <Label>2. Escolha da Voz</Label>
+                <Label>2. Voice</Label>
                 <Dialog open={isVoiceDialogOpen} onOpenChange={setIsVoiceDialogOpen}>
                   <DialogTrigger asChild>
                     <Button variant="outline" className="w-full justify-start">
@@ -358,7 +349,7 @@ export default function StudioClient() {
                   </DialogTrigger>
                   <DialogContent className="max-w-md">
                     <DialogHeader>
-                      <DialogTitle>Escolha uma Voz (OpenAI TTS)</DialogTitle>
+                      <DialogTitle>Choose a voice (OpenAI TTS)</DialogTitle>
                     </DialogHeader>
                     <div className="space-y-3 max-h-80 overflow-y-auto">
                       {voiceOptions.map((voice) => (
@@ -394,7 +385,7 @@ export default function StudioClient() {
               <div className="space-y-3">
                 <Label>3. Downloads</Label>
                 
-                {/* Download Roteiro */}
+                {/* Script download */}
                 <Button 
                   onClick={downloadScript} 
                   disabled={!script.trim()} 
@@ -402,33 +393,29 @@ export default function StudioClient() {
                   variant="outline"
                 >
                   <Download className="w-4 h-4 mr-2" />
-                  Baixar roteiro (TXT)
+                  Download script (TXT)
                 </Button>
 
-                {/* Preview do texto falado */}
+                {/* Spoken text preview */}
                 {script.trim() && (
                   <Button 
                     onClick={() => {
                       const spokenText = extractSpokenText(script)
-                      console.log('Script completo:', script)
-                      console.log('Linhas processadas:', script.split('\n').map((line, i) => `${i+1}: ${line}`))
-                      console.log('Texto extraído:', spokenText)
-                      
                       if (spokenText.trim()) {
-                        alert(`Texto que será falado:\n\n${spokenText}`)
+                        alert(`Text that will be spoken:\n\n${spokenText}`)
                       } else {
-                        alert('Nenhum texto falado encontrado! Verifique o console para debug.')
+                        alert('No spoken text found in the script.')
                       }
                     }} 
                     className="w-full"
                     variant="outline"
                     size="sm"
                   >
-                    <Eye className="w-4 h-4 mr-2" /> Visualizar texto que será falado
+                    <Eye className="w-4 h-4 mr-2" /> Preview spoken text
                   </Button>
                 )}
 
-                {/* Gerar Áudio */}
+                {/* Generate audio */}
                 <Button 
                   onClick={generateAudio} 
                   disabled={!script.trim() || isGeneratingAudio} 
@@ -436,10 +423,10 @@ export default function StudioClient() {
                   variant="default"
                 >
                   <Volume2 className="w-4 h-4 mr-2" />
-                  {isGeneratingAudio ? 'Gerando áudio...' : `Gerar áudio com ${selectedVoice.name}`}
+                  {isGeneratingAudio ? 'Generating audio...' : `Generate audio with ${selectedVoice.name}`}
                 </Button>
                 
-                {/* Download Áudio Separado */}
+                {/* Audio download */}
                 {audioUrl && (
                   <Button 
                     onClick={downloadAudio} 
@@ -447,14 +434,14 @@ export default function StudioClient() {
                     variant="outline"
                   >
                     <Download className="w-4 h-4 mr-2" />
-                    Baixar MP3
+                    Download MP3
                   </Button>
                 )}
                 
                 <p className="text-xs text-muted-foreground">
                   {script.trim() ? 
-                    `A IA extrairá automaticamente apenas o texto falado (removendo instruções de cena, etc.)` :
-                    `O áudio será gerado usando IA da OpenAI com a voz "${selectedVoice.name}"`
+                    `Only the narration lines are read aloud; scene directions are skipped.` :
+                    `Audio is generated with OpenAI using the "${selectedVoice.name}" voice.`
                   }
                 </p>
               </div>

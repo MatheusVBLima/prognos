@@ -23,45 +23,45 @@ interface SearchFiltersProps {
 }
 
 const countries = [
-  "Brasil",
-  "Estados Unidos",
+  "Brazil",
+  "United States",
   "Portugal",
   "Argentina",
-  "Espanha",
-  "México",
-  "Colômbia",
+  "Spain",
+  "Mexico",
+  "Colombia",
   "Chile",
   "Peru"
 ]
 
 const periods = [
-  "Últimas 24 horas",
-  "Últimos 7 dias",
-  "Último mês",
-  "Últimos 3 meses",
-  "Último ano",
-  "Desde 2004"
+  "Past 24 hours",
+  "Past 7 days",
+  "Past month",
+  "Past 3 months",
+  "Past year",
+  "Since 2004"
 ]
 
 const categories = [
-  "Todas as categorias",
-  "Compras",
-  "Notícias",
-  "Entretenimento",
-  "Esportes",
-  "Alimentos e bebidas",
-  "Viagens",
-  "Ciência",
-  "Finanças",
-  "Saúde"
+  "All categories",
+  "Shopping",
+  "News",
+  "Entertainment",
+  "Sports",
+  "Food & drink",
+  "Travel",
+  "Science",
+  "Finance",
+  "Health"
 ]
 
 const sortOptions = [
-  "Por relevância",
-  "Por volume de pesquisa",
-  "Ordem alfabética",
-  "Crescente",
-  "Decrescente"
+  "Relevance",
+  "Search volume",
+  "Alphabetical",
+  "Ascending",
+  "Descending"
 ]
 
 export function SearchFilters({
@@ -77,7 +77,7 @@ export function SearchFilters({
 
   return (
     <div className="flex flex-wrap gap-2 items-center mb-4 justify-start">
-      {/* País */}
+      {/* Country */}
       <div className="relative">
         <Select
           value={selectedCountry || ""}
@@ -85,11 +85,11 @@ export function SearchFilters({
         >
           <SelectTrigger className="min-w-[120px]">
             <Globe className="h-4 w-4 " />
-            <SelectValue placeholder="País" />
+            <SelectValue placeholder="Country" />
           </SelectTrigger>
           <SelectContent >
             <SelectGroup>
-              <SelectLabel >Países</SelectLabel>
+              <SelectLabel >Countries</SelectLabel>
               {countries.map((country) => (
                 <SelectItem 
                   key={country} 
@@ -104,7 +104,7 @@ export function SearchFilters({
         </Select>
       </div>
 
-      {/* Período */}
+      {/* Period */}
       <div className="relative">
         <Select
           value={selectedPeriod || ""}
@@ -112,11 +112,11 @@ export function SearchFilters({
         >
           <SelectTrigger className="min-w-[180px]">
             <Calendar className="h-4 w-4 " />
-            <SelectValue placeholder="Período" />
+            <SelectValue placeholder="Period" />
           </SelectTrigger>
           <SelectContent >
             <SelectGroup>
-              <SelectLabel >Períodos</SelectLabel>
+              <SelectLabel >Periods</SelectLabel>
               {periods.map((period) => (
                 <SelectItem 
                   key={period} 
@@ -131,7 +131,7 @@ export function SearchFilters({
         </Select>
       </div>
 
-      {/* Categoria */}
+      {/* Category */}
       <div className="relative">
         <Select
           value={selectedCategory || ""}
@@ -139,11 +139,11 @@ export function SearchFilters({
         >
           <SelectTrigger className="min-w-[200px]">
             <Grid3X3 className="h-4 w-4 " />
-            <SelectValue placeholder="Categoria" />
+            <SelectValue placeholder="Category" />
           </SelectTrigger>
           <SelectContent >
             <SelectGroup>
-              <SelectLabel >Categorias</SelectLabel>
+              <SelectLabel >Categories</SelectLabel>
               {categories.map((category) => (
                 <SelectItem 
                   key={category} 
@@ -158,7 +158,7 @@ export function SearchFilters({
         </Select>
       </div>
 
-      {/* Ordenação */}
+      {/* Sort */}
       <div className="relative">
         <Select
           value={selectedSort || ""}
@@ -166,11 +166,11 @@ export function SearchFilters({
         >
           <SelectTrigger className="min-w-[160px]">
             <ArrowDownAZ className="h-4 w-4 " />
-            <SelectValue placeholder="Ordenar por" />
+            <SelectValue placeholder="Sort by" />
           </SelectTrigger>
           <SelectContent >
             <SelectGroup>
-              <SelectLabel >Ordenação</SelectLabel>
+              <SelectLabel >Sort</SelectLabel>
               {sortOptions.map((option) => (
                 <SelectItem 
                   key={option} 
