@@ -1,6 +1,7 @@
 import { cn } from "@/lib/utils"
-import { FinalAssembly, Plate } from "./drawings"
+import { FinalAssembly } from "./drawings"
 import styles from "./manual.module.css"
+import { Plate } from "./plates"
 import { ManualButton, SectionRule, Stamp, Tag, mono } from "./primitives"
 import { Logo } from "./site-header"
 
@@ -43,7 +44,7 @@ export function Schedule() {
         {PARTS.map((part) => (
           <article key={part.code} className="flex flex-col border-b border-r border-foreground">
             <div className={cn(styles.paper, "border-b border-foreground px-4 py-3")}>
-              <Plate kind={part.plate} className="h-32 w-full text-foreground" />
+              <Plate kind={part.plate} className="h-40 w-full text-foreground" />
             </div>
             <div className="flex flex-1 flex-col p-5">
               <div className="flex items-center gap-3">

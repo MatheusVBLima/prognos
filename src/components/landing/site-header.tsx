@@ -1,5 +1,6 @@
 import Link from "next/link"
 
+import { PrognosMark } from "@/components/brand/prognos-mark"
 import { cn } from "@/lib/utils"
 import { ManualButton, mono } from "./primitives"
 
@@ -12,14 +13,8 @@ const NAV = [
 
 export function Logo() {
   return (
-    <span className="flex items-center gap-2.5 text-[17px] font-[600] tracking-tight">
-      <span aria-hidden className="relative grid size-6 place-items-center">
-        <span className="absolute inset-x-[-4px] top-1/2 h-px bg-foreground" />
-        <span className="absolute inset-y-[-4px] left-1/2 w-px bg-foreground" />
-        <span className="relative size-4 border border-foreground bg-background p-[3px]">
-          <span className="block size-full bg-[color:var(--accent)]" />
-        </span>
-      </span>
+    <span className="flex items-center gap-2 text-[18px] font-[600] tracking-[-0.02em]">
+      <PrognosMark className="h-[22px] w-auto" />
       Prognos
     </span>
   )
