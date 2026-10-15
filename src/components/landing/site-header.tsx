@@ -1,44 +1,50 @@
 import Link from "next/link"
 
-import { Button } from "@/components/ui/button"
-import { Logo } from "./logo"
-import { NewStamp, gradientFill, styles } from "./ui"
+import { cn } from "@/lib/utils"
+import { ManualButton, mono } from "./primitives"
 
 const NAV = [
-  { href: "#features", label: "Features" },
-  { href: "#trend-radar", label: "Trend radar", isNew: true },
-  { href: "#how-it-works", label: "How it works" },
-  { href: "#pricing", label: "Pricing" },
-  { href: "#faq", label: "FAQs" },
+  { href: "#schedule", label: "Tools" },
+  { href: "#procedure", label: "Procedure" },
+  { href: "#kits", label: "Kits" },
+  { href: "#troubleshooting", label: "Manual" },
 ]
+
+export function Logo() {
+  return (
+    <span className="flex items-center gap-2.5 text-[17px] font-[600] tracking-tight">
+      <span aria-hidden className="relative grid size-6 place-items-center">
+        <span className="absolute inset-x-[-4px] top-1/2 h-px bg-foreground" />
+        <span className="absolute inset-y-[-4px] left-1/2 w-px bg-foreground" />
+        <span className="relative size-4 border border-foreground bg-background p-[3px]">
+          <span className="block size-full bg-[color:var(--accent)]" />
+        </span>
+      </span>
+      Prognos
+    </span>
+  )
+}
 
 export function SiteHeader() {
   return (
-    <header className="sticky top-3 z-40 px-3 sm:top-4">
-      <div className="mx-auto flex h-14 max-w-4xl items-center gap-6 rounded-full border bg-card/95 pl-5 pr-2 shadow-lg backdrop-blur sm:h-16">
+    <header className="border-b border-border">
+      <div className="mx-auto flex h-14 max-w-[1180px] items-center gap-4 px-4 sm:h-[72px] sm:px-6">
         <Link href="/" aria-label="Prognos home">
           <Logo />
         </Link>
-        <nav className="hidden items-center gap-5 text-sm lg:flex">
+        <span className={cn(mono, "hidden border-l border-border pl-4 text-[11px] uppercase tracking-[0.2em] text-muted-foreground sm:block")}>
+          PG-140 · Rev. D
+        </span>
+        <nav className={cn(mono, "ml-auto hidden items-center gap-8 text-[12px] uppercase tracking-[0.2em] text-muted-foreground md:flex")}>
           {NAV.map((item) => (
-            <a
-              key={item.href}
-              href={item.href}
-              className={`relative transition-colors hover:text-primary ${item.isNew ? styles.wiggleHost : ""}`}
-            >
+            <a key={item.href} href={item.href} className="transition-colors hover:text-foreground">
               {item.label}
-              {item.isNew && <NewStamp className="absolute -right-5 -top-4" />}
             </a>
           ))}
         </nav>
-        <div className="ml-auto flex items-center gap-2">
-          <Button asChild variant="secondary" className="hidden rounded-full uppercase tracking-wide sm:inline-flex">
-            <Link href="/dashboard">Sign in</Link>
-          </Button>
-          <Button asChild className={`rounded-full uppercase tracking-wide hover:opacity-90 ${gradientFill}`}>
-            <Link href="/dashboard">Try it free</Link>
-          </Button>
-        </div>
+        <ManualButton href="/dashboard" className="ml-auto h-10 px-4 md:ml-6">
+          Start a project <span aria-hidden>→</span>
+        </ManualButton>
       </div>
     </header>
   )

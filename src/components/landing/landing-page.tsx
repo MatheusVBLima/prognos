@@ -1,24 +1,29 @@
+import { IBM_Plex_Mono, IBM_Plex_Sans } from "next/font/google"
+
+import { cn } from "@/lib/utils"
 import { Hero } from "./hero"
-import { Faq, Features, FinalCta, HowItWorks, Platforms, Pricing, SiteFooter, TrendRadar } from "./sections"
+import styles from "./manual.module.css"
+import { Kits, OrderAuthorization, Procedure, Schedule, SiteFooter, Specifications, Troubleshooting } from "./sections"
 import { SiteHeader } from "./site-header"
 
-// Layout follows the "Hay" flavor from flavors.design (floating pill nav, gradient
-// headlines, drawn app windows, quote bubbles, scalloped bands) with a fan of reel
-// cards inspired by motionsites' "Nouver" hero. Every colour comes from the shadcn
-// theme variables so a tweakcn theme can replace it.
+const sans = IBM_Plex_Sans({ subsets: ["latin"], weight: ["400", "500", "600"], variable: "--wm-sans" })
+const plexMono = IBM_Plex_Mono({ subsets: ["latin"], weight: ["400", "500", "600"], variable: "--wm-mono" })
+
+// Layout, type and palette follow the "Workshop Manual" flavor from flavors.design:
+// warm paper, graph-paper plates, IBM Plex, square edges, one safety-orange part and
+// exploded hairline drawings. Copy and drawings are Prognos-specific.
 export function LandingPage() {
   return (
-    <div className="min-h-screen bg-background pt-3 text-foreground sm:pt-4">
+    <div className={cn(styles.root, sans.variable, plexMono.variable, "min-h-screen")}>
       <SiteHeader />
       <main>
         <Hero />
-        <Platforms />
-        <TrendRadar />
-        <HowItWorks />
-        <Features />
-        <Pricing />
-        <Faq />
-        <FinalCta />
+        <Schedule />
+        <Procedure />
+        <Specifications />
+        <Kits />
+        <Troubleshooting />
+        <OrderAuthorization />
       </main>
       <SiteFooter />
     </div>

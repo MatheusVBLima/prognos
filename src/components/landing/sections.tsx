@@ -1,390 +1,268 @@
-import Link from "next/link"
-import {
-  Check,
-  Clapperboard,
-  FileText,
-  GalleryHorizontal,
-  Link2,
-  PenLine,
-  Plus,
-  Sparkles,
-  Users,
-  Wand2,
-} from "lucide-react"
-
-import { Button } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
-import { Logo } from "./logo"
-import { StudioShowcase } from "./studio-showcase"
-import { AppWindow, Bubble, Eyebrow, Scallop, gradientFill, gradientText, pastel, styles, type Pastel } from "./ui"
+import { FinalAssembly, Plate } from "./drawings"
+import styles from "./manual.module.css"
+import { ManualButton, SectionRule, Stamp, Tag, mono } from "./primitives"
+import { Logo } from "./site-header"
 
-const PLATFORMS = ["Instagram", "TikTok", "YouTube Shorts", "LinkedIn", "X", "Threads", "Pinterest"]
-
-export function Platforms() {
-  const row = [...PLATFORMS, ...PLATFORMS]
+function Container({ id, children, className }: { id?: string; children: React.ReactNode; className?: string }) {
   return (
-    <section className="py-14">
-      <p className="text-center text-sm uppercase tracking-widest text-muted-foreground">
-        Made for every feed your audience scrolls
-      </p>
-      <div className="relative mt-6 overflow-hidden [mask-image:linear-gradient(90deg,transparent,black_15%,black_85%,transparent)]">
-        <ul className={cn("flex w-max gap-14 text-2xl tracking-tight text-foreground/40", styles.marquee)}>
-          {row.map((p, i) => (
-            <li key={i}>{p}</li>
-          ))}
-        </ul>
-      </div>
-    </section>
-  )
-}
-
-function SectionHeading({
-  eyebrow,
-  title,
-  body,
-  center = true,
-  invert = false,
-}: {
-  eyebrow: string
-  title: React.ReactNode
-  body?: string
-  center?: boolean
-  invert?: boolean
-}) {
-  return (
-    <div className={cn("max-w-3xl", center && "mx-auto text-center")}>
-      <Eyebrow className={cn(invert && "text-primary-foreground/80")}>{eyebrow}</Eyebrow>
-      <h2 className="mt-3 text-4xl leading-[1.05] tracking-tight text-balance sm:text-6xl">{title}</h2>
-      {body && (
-        <p className={cn("mt-5 text-lg leading-snug text-balance sm:text-xl", invert ? "text-primary-foreground/85" : "text-foreground/75")}>
-          {body}
-        </p>
-      )}
-    </div>
-  )
-}
-
-export function TrendRadar() {
-  return (
-    <section id="trend-radar" className="mx-auto max-w-6xl scroll-mt-28 px-4 py-20 sm:px-6">
-      <SectionHeading
-        eyebrow="Trend radar"
-        title={
-          <>
-            Spot the wave, <span className={gradientText}>then ride it.</span>
-          </>
-        }
-        body="Prognos tracks what's rising in your niche every day and drafts content for it in the format you need."
-      />
-      <div className="mt-14">
-        <StudioShowcase />
-      </div>
-    </section>
-  )
-}
-
-const STEPS: { icon: React.ComponentType<{ className?: string }>; title: string; body: string; tone: Pastel }[] = [
-  {
-    icon: Link2,
-    title: "Connect your accounts",
-    body: "Link Instagram, TikTok, YouTube and more so Prognos learns your voice and what already works.",
-    tone: "sky",
-  },
-  {
-    icon: PenLine,
-    title: "Tell us about your project",
-    body: "Paste a link or write a few lines. Prognos maps your niche and the topics around it.",
-    tone: "peach",
-  },
-  {
-    icon: Sparkles,
-    title: "Generate, tweak, post",
-    body: "Pick a rising trend, get a draft in any format and polish it in the mini editor.",
-    tone: "mint",
-  },
-]
-
-export function HowItWorks() {
-  return (
-    <section id="how-it-works" className="scroll-mt-28 pt-10">
-      <Scallop edge="top" />
-      <div className="bg-primary px-4 py-20 text-primary-foreground sm:px-6">
-        <div className="mx-auto max-w-6xl">
-          <SectionHeading eyebrow="How it works" title="Three steps. Zero blank pages." invert />
-          <ol className="mt-14 grid gap-6 md:grid-cols-3">
-            {STEPS.map((step, i) => (
-              <li key={step.title} className="rounded-[var(--radius)] bg-card p-7 text-card-foreground shadow-xl">
-                <div className="flex items-center gap-3">
-                  <span className="grid size-12 place-items-center rounded-full text-primary" style={pastel(step.tone)}>
-                    <step.icon className="size-5" />
-                  </span>
-                  <span className={cn("text-4xl", gradientText)}>{i + 1}</span>
-                </div>
-                <h3 className="mt-6 text-2xl tracking-tight">{step.title}</h3>
-                <p className="mt-2 leading-relaxed text-muted-foreground">{step.body}</p>
-              </li>
-            ))}
-          </ol>
-        </div>
-      </div>
-      <Scallop edge="bottom" />
-    </section>
-  )
-}
-
-export function Features() {
-  return (
-    <section id="features" className="mx-auto max-w-6xl scroll-mt-28 px-4 py-24 sm:px-6">
-      <SectionHeading
-        eyebrow="Features"
-        title={
-          <>
-            Everything between an idea <span className={gradientText}>and a post.</span>
-          </>
-        }
-      />
-
-      <div className="mt-14 grid gap-5 md:grid-cols-3">
-        <FeatureCard tone="peach" icon={FileText} title="Scripts with a hook" body="Timed beats, a first line that stops the scroll and a clear call to action.">
-          <AppWindow className="mt-6 shadow-[4px_4px_0_0_var(--foreground)]">
-            <div className="space-y-2 p-4 text-xs">
-              <p><span className="text-primary">0:00 HOOK</span> I spent $0 on this desk setup.</p>
-              <p className="text-muted-foreground"><span className="text-primary">0:04</span> Before: cables everywhere...</p>
-            </div>
-          </AppWindow>
-        </FeatureCard>
-
-        <FeatureCard tone="lilac" icon={GalleryHorizontal} title="Carousels that get saved" body="Slide-by-slide copy and layout, sized for Instagram and LinkedIn.">
-          <div className="mt-6 flex justify-center">
-            {["Hook", "Tip", "Save!"].map((t, i) => (
-              <div
-                key={t}
-                className={cn(
-                  "-mx-2 grid aspect-[4/5] w-24 place-items-center rounded-xl border-2 border-foreground/90 text-sm shadow-[3px_3px_0_0_var(--foreground)]",
-                  i === 0 ? "bg-primary text-primary-foreground" : "bg-card",
-                )}
-                style={{ transform: `rotate(${(i - 1) * 7}deg)` }}
-              >
-                {t}
-              </div>
-            ))}
-          </div>
-        </FeatureCard>
-
-        <FeatureCard tone="sky" icon={Clapperboard} title="Reels, shot by shot" body="A shot list with on-screen text and timing, ready to film.">
-          <div className="mt-6 grid grid-cols-4 gap-2">
-            {["Hook", "B-roll", "Reveal", "CTA"].map((t, i) => (
-              <div key={t} className="grid aspect-[9/16] place-items-end rounded-lg border-2 border-foreground/90 bg-card p-1.5 text-[10px]">
-                <span className="w-full rounded bg-foreground/10 px-1">{i + 1}. {t}</span>
-              </div>
-            ))}
-          </div>
-        </FeatureCard>
-
-        <FeatureCard tone="mint" icon={Wand2} title="A mini editor built in" body="Rewrite a line, change the tone or swap a slide without leaving the draft." className="md:col-span-2">
-          <div className="mt-6 flex flex-wrap items-center gap-3">
-            <div className="flex-1 rounded-xl border-2 border-foreground/90 bg-card p-4 text-sm shadow-[4px_4px_0_0_var(--foreground)]">
-              Unpopular opinion: you don&apos;t need a new desk.{" "}
-              <mark className="rounded bg-chart-3/30 px-1 text-foreground">You need a better lamp.</mark>
-            </div>
-            <div className="flex flex-wrap gap-2">
-              {["Shorter", "Funnier", "More direct", "Add emoji 🎉"].map((t) => (
-                <span key={t} className="rounded-full border-2 border-foreground/90 bg-card px-3 py-1 text-xs">
-                  {t}
-                </span>
-              ))}
-            </div>
-          </div>
-        </FeatureCard>
-
-        <FeatureCard tone="sun" icon={Users} title="Knows your voice" body="Connected accounts and your project brief keep every draft on brand.">
-          <div className="mt-6 flex -space-x-3">
-            {["var(--primary)", "var(--chart-3)", "var(--chart-1)", "var(--chart-4)"].map((c) => (
-              <span key={c} className="size-11 rounded-full border-4 border-card" style={{ background: c }} />
-            ))}
-            <span className="grid size-11 place-items-center rounded-full border-4 border-card bg-foreground text-xs text-background">+2</span>
-          </div>
-        </FeatureCard>
-      </div>
-    </section>
-  )
-}
-
-function FeatureCard({
-  tone,
-  icon: Icon,
-  title,
-  body,
-  className,
-  children,
-}: {
-  tone: Pastel
-  icon: React.ComponentType<{ className?: string }>
-  title: string
-  body: string
-  className?: string
-  children?: React.ReactNode
-}) {
-  return (
-    <div className={cn("overflow-hidden rounded-[var(--radius)] p-7", className)} style={pastel(tone)}>
-      <span className="grid size-11 place-items-center rounded-full bg-card text-primary shadow-sm">
-        <Icon className="size-5" />
-      </span>
-      <h3 className="mt-5 text-2xl tracking-tight">{title}</h3>
-      <p className="mt-2 leading-relaxed text-foreground/70">{body}</p>
+    <section id={id} className={cn("mx-auto max-w-[1180px] scroll-mt-6 px-4 pt-24 sm:px-6", className)}>
       {children}
+    </section>
+  )
+}
+
+function Heading({ children, sub }: { children: React.ReactNode; sub?: string }) {
+  return (
+    <div className="mt-8 grid gap-6 lg:grid-cols-[1fr_380px] lg:items-end">
+      <h2 className="text-[40px] font-[600] leading-[0.98] tracking-[-0.035em] sm:text-[56px]">{children}</h2>
+      {sub && <p className="text-[16px] leading-[1.6] text-foreground/80">{sub}</p>}
     </div>
   )
 }
 
-const PLANS = [
-  {
-    name: "Free",
-    price: "$0",
-    blurb: "Try Prognos on one project.",
-    features: ["1 project", "Daily trend digest", "10 drafts a month", "Scripts and posts"],
-    cta: "Start free",
-  },
-  {
-    name: "Creator",
-    price: "$19",
-    blurb: "For creators posting every week.",
-    features: ["5 projects", "Real-time trend radar", "Unlimited drafts", "Carousels and reels", "Mini editor"],
-    cta: "Try Creator free",
-    popular: true,
-  },
-  {
-    name: "Studio",
-    price: "$49",
-    blurb: "For teams and agencies.",
-    features: ["Unlimited projects", "Up to 5 seats", "Shared brand voices", "Priority support"],
-    cta: "Talk to us",
-  },
+const PARTS = [
+  { code: "PG-01", name: "Trend radar", plate: "radar", body: "Watches search and social trends in your niche every day and tells you why each one is rising.", spec: "Refresh · 24 h" },
+  { code: "PG-02", name: "Project brief", plate: "brief", body: "Paste a link or describe what you make. Every idea starts from your project, not the whole internet.", spec: "Inputs · link or text" },
+  { code: "PG-03", name: "Script engine", plate: "script", body: "Timed beats, a hook in the first line and a clear call to action, written in your voice.", spec: "Length · 15–90 s" },
+  { code: "PG-04", name: "Carousel press", plate: "carousel", body: "Slide-by-slide copy and layout, sized for Instagram and LinkedIn, ready to export.", spec: "Slides · 3–10", highlight: true },
+  { code: "PG-05", name: "Reel storyboard", plate: "reel", body: "A shot list with on-screen text and timing, so filming takes one take instead of five.", spec: "Shots · 4–12" },
+  { code: "PG-06", name: "Mini editor", plate: "editor", body: "Rewrite a line, change the tone or swap a slide without leaving the draft.", spec: "Undo · unlimited" },
+] as const
+
+export function Schedule() {
+  return (
+    <Container id="schedule">
+      <SectionRule n={2} label="Component schedule" sheet="Sheet 2 / 6" />
+      <Heading sub="Six parts, each replaceable on its own. Use the whole kit or only the parts you need this week.">
+        Every part,
+        <br />
+        on the bench.
+      </Heading>
+      <div className="mt-12 grid border-l border-t border-foreground sm:grid-cols-2 lg:grid-cols-3">
+        {PARTS.map((part) => (
+          <article key={part.code} className="flex flex-col border-b border-r border-foreground">
+            <div className={cn(styles.paper, "border-b border-foreground px-4 py-3")}>
+              <Plate kind={part.plate} className="h-32 w-full text-foreground" />
+            </div>
+            <div className="flex flex-1 flex-col p-5">
+              <div className="flex items-center gap-3">
+                {"highlight" in part ? <Tag>{part.code}</Tag> : <span className={cn(mono, "text-[11px] tracking-[0.18em]")}>{part.code}</span>}
+                <span className={cn(mono, "text-[11px] uppercase tracking-[0.2em] text-muted-foreground")}>{part.name}</span>
+              </div>
+              <h3 className="mt-4 text-[22px] font-[600] tracking-[-0.02em]">{part.name}</h3>
+              <p className="mt-2 flex-1 text-[15px] leading-[1.6] text-foreground/80">{part.body}</p>
+              <p className={cn(mono, "mt-5 border-t border-dashed border-border pt-3 text-[10.5px] uppercase tracking-[0.2em] text-muted-foreground")}>
+                {part.spec} · Qty 1
+              </p>
+            </div>
+          </article>
+        ))}
+      </div>
+    </Container>
+  )
+}
+
+const STEPS = [
+  { title: "Connect your accounts", body: "Link Instagram, TikTok, YouTube, LinkedIn, X or Threads so Prognos learns your voice and what already works.", tools: "Your logins", time: "2 min" },
+  { title: "Describe the project", body: "Paste your channel, product or site, or write three lines about it. Prognos maps your niche and its neighbours.", tools: "PG-02 brief", time: "1 min" },
+  { title: "Pick a rising trend", body: "Open the radar, sort by momentum and pick the trend that fits. Each one shows why it is rising right now.", tools: "PG-01 radar", time: "1 min" },
+  { title: "Generate, adjust, post", body: "Choose a format and get a draft. Swap the hook, tighten a beat in the editor, then copy it to your platform.", tools: "PG-03 to PG-06", time: "5 min" },
 ]
 
-export function Pricing() {
+export function Procedure() {
   return (
-    <section id="pricing" className="mx-auto max-w-6xl scroll-mt-28 px-4 py-24 sm:px-6">
-      <SectionHeading eyebrow="Pricing" title="Pick a plan, start posting." />
-      <div className="mt-14 grid items-center gap-6 md:grid-cols-3">
-        {PLANS.map((plan) => (
-          <div
-            key={plan.name}
-            className={cn(
-              "rounded-[var(--radius)]",
-              plan.popular ? "bg-gradient-to-br from-primary to-chart-3 p-1 shadow-2xl md:scale-105" : "border bg-card",
-            )}
-          >
-            <div className="flex h-full flex-col rounded-[calc(var(--radius)-0.25rem)] bg-card p-7">
-              <div className="flex items-center justify-between">
-                <h3 className="text-2xl tracking-tight">{plan.name}</h3>
-                {plan.popular && (
-                  <span className={cn("-rotate-3 rounded-full px-3 py-1 text-xs uppercase tracking-wide", gradientFill)}>
-                    Most popular
-                  </span>
-                )}
-              </div>
-              <p className="mt-1 text-sm text-muted-foreground">{plan.blurb}</p>
-              <p className="mt-6 flex items-baseline gap-1">
-                <span className={cn("text-6xl tracking-tight", plan.popular && gradientText)}>{plan.price}</span>
-                <span className="text-sm text-muted-foreground">/month</span>
-              </p>
-              <ul className="mt-6 flex-1 space-y-3 text-sm">
-                {plan.features.map((f) => (
-                  <li key={f} className="flex items-center gap-2.5">
-                    <span className="grid size-5 shrink-0 place-items-center rounded-full text-primary" style={pastel("lilac")}>
-                      <Check className="size-3" />
-                    </span>
-                    {f}
-                  </li>
-                ))}
-              </ul>
-              <Button
-                asChild
-                size="lg"
-                variant={plan.popular ? "default" : "secondary"}
-                className={cn("mt-8 w-full rounded-full uppercase tracking-wide", plan.popular && `hover:opacity-90 ${gradientFill}`)}
-              >
-                <Link href="/dashboard">{plan.cta}</Link>
-              </Button>
+    <Container id="procedure">
+      <SectionRule n={3} label="Assembly procedure" sheet="Sheet 3 / 6" />
+      <Heading sub="Four steps from a blank page to a finished post. No special tools required.">
+        Assemble a post
+        <br />
+        in 9 minutes.
+      </Heading>
+      <ol className="mt-12 border-t border-foreground">
+        {STEPS.map((step, i) => (
+          <li key={step.title} className="grid gap-4 border-b border-foreground py-7 sm:grid-cols-[90px_1fr] lg:grid-cols-[90px_1fr_260px]">
+            <span className={cn(mono, "text-[40px] font-[500] leading-none tracking-tight", i === 0 && "text-[color:var(--accent)]")}>
+              {String(i + 1).padStart(2, "0")}
+            </span>
+            <div>
+              <h3 className="text-[22px] font-[600] tracking-[-0.02em]">{step.title}</h3>
+              <p className="mt-2 max-w-[560px] text-[15px] leading-[1.6] text-foreground/80">{step.body}</p>
             </div>
+            <dl className={cn(mono, "grid grid-cols-2 gap-x-4 gap-y-1 self-start text-[10.5px] uppercase tracking-[0.2em] text-muted-foreground sm:col-start-2 lg:col-start-3")}>
+              <dt>Tools</dt>
+              <dd className="text-foreground">{step.tools}</dd>
+              <dt>Time</dt>
+              <dd className="text-foreground">{step.time}</dd>
+            </dl>
+          </li>
+        ))}
+      </ol>
+    </Container>
+  )
+}
+
+const SPECS = [
+  ["Script", "TikTok · Reels · Shorts", "15–90 s", "Hook, beats, CTA", "In service"],
+  ["Post", "LinkedIn · X · Threads", "50–300 words", "Copy + first comment", "In service"],
+  ["Carousel", "Instagram · LinkedIn", "3–10 slides", "Slide copy + layout", "In service"],
+  ["Reel", "Instagram · TikTok", "4–12 shots", "Shot list + overlays", "In service"],
+  ["Thread", "X · Threads", "4–12 parts", "Numbered parts", "Rev. E"],
+]
+
+export function Specifications() {
+  return (
+    <Container id="specs">
+      <SectionRule n={4} label="Specifications" sheet="Sheet 4 / 6" />
+      <Heading>Output tolerances.</Heading>
+      <div className="mt-12 overflow-x-auto border border-foreground">
+        <table className="w-full min-w-[720px] text-left">
+          <thead className={cn(mono, "bg-secondary text-[10.5px] uppercase tracking-[0.2em] text-muted-foreground")}>
+            <tr>
+              {["Format", "Platforms", "Range", "Ships with", "Status"].map((h) => (
+                <th key={h} className="border-b border-foreground px-4 py-3 font-[500]">
+                  {h}
+                </th>
+              ))}
+            </tr>
+          </thead>
+          <tbody className="text-[15px]">
+            {SPECS.map(([format, platforms, range, ships, status]) => (
+              <tr key={format} className="border-b border-border last:border-b-0">
+                <td className="px-4 py-3.5 font-[600]">{format}</td>
+                <td className="px-4 py-3.5 text-foreground/80">{platforms}</td>
+                <td className={cn(mono, "px-4 py-3.5 text-[13px]")}>{range}</td>
+                <td className="px-4 py-3.5 text-foreground/80">{ships}</td>
+                <td className={cn(mono, "px-4 py-3.5 text-[11px] uppercase tracking-[0.2em]", status !== "In service" && "text-[color:var(--accent)]")}>{status}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </Container>
+  )
+}
+
+const KITS = [
+  { code: "KIT-01", name: "Bench", price: "$0", note: "One project, to try the kit.", parts: ["1 project", "Daily trend digest", "10 drafts / month", "PG-03 scripts and posts"], cta: "Start free" },
+  { code: "KIT-02", name: "Creator", price: "$19", note: "For creators posting every week.", parts: ["5 projects", "Real-time trend radar", "Unlimited drafts", "All formats, PG-01 to PG-06", "Mini editor"], cta: "Order KIT-02", highlight: true },
+  { code: "KIT-03", name: "Studio", price: "$49", note: "For teams and agencies.", parts: ["Unlimited projects", "Up to 5 seats", "Shared brand voices", "Priority support"], cta: "Talk to us" },
+]
+
+export function Kits() {
+  return (
+    <Container id="kits">
+      <SectionRule n={5} label="Kits" sheet="Sheet 5 / 6" />
+      <Heading sub="Monthly, cancel any time. Every kit includes the manual and free revisions.">Pick a kit.</Heading>
+      <div className="mt-12 grid border-l border-t border-foreground lg:grid-cols-3">
+        {KITS.map((kit) => (
+          <div key={kit.code} className={cn("relative flex flex-col border-b border-r border-foreground p-6", kit.highlight && "bg-secondary")}>
+            {kit.highlight && <span className="absolute inset-x-0 top-0 h-1.5 bg-[color:var(--accent)]" />}
+            <div className="flex items-center justify-between">
+              <span className={cn(mono, "text-[11px] uppercase tracking-[0.2em] text-muted-foreground")}>{kit.code}</span>
+              {kit.highlight && <Tag>Most ordered</Tag>}
+            </div>
+            <h3 className="mt-6 text-[26px] font-[600] tracking-[-0.02em]">{kit.name}</h3>
+            <p className="mt-1 text-[15px] text-foreground/75">{kit.note}</p>
+            <p className="mt-6 flex items-baseline gap-2">
+              <span className="text-[56px] font-[600] leading-none tracking-[-0.04em]">{kit.price}</span>
+              <span className={cn(mono, "text-[11px] uppercase tracking-[0.2em] text-muted-foreground")}>/ month</span>
+            </p>
+            <ul className="mt-6 flex-1 border-t border-border">
+              {kit.parts.map((p, i) => (
+                <li key={p} className="flex gap-3 border-b border-dashed border-border py-2.5 text-[15px]">
+                  <span className={cn(mono, "text-[11px] leading-[22px] text-muted-foreground")}>{String(i + 1).padStart(2, "0")}</span>
+                  {p}
+                </li>
+              ))}
+            </ul>
+            <ManualButton href="/dashboard" variant={kit.highlight ? "solid" : "outline"} className="mt-8 w-full">
+              {kit.cta} <span aria-hidden>→</span>
+            </ManualButton>
           </div>
         ))}
       </div>
-    </section>
+    </Container>
   )
 }
 
-const FAQS = [
-  {
-    q: "Which platforms does Prognos support?",
-    a: "You can create content for Instagram, TikTok, YouTube Shorts, LinkedIn, X and Threads. Connecting accounts is optional, but it helps Prognos match your voice.",
-  },
-  {
-    q: "Where do the trends come from?",
-    a: "Prognos combines search trends with what's gaining traction on social platforms, then filters everything down to the topics around your project.",
-  },
-  {
-    q: "Will the content sound like me?",
-    a: "Each project keeps its own brief and voice. The more you edit drafts in the mini editor, the closer new drafts get to how you write.",
-  },
-  {
-    q: "Can I cancel anytime?",
-    a: "Yes. Plans are monthly and you can go back to Free whenever you want without losing your projects.",
-  },
+const FAQ = [
+  ["T-01", "Which platforms does Prognos support?", "Instagram, TikTok, YouTube Shorts, LinkedIn, X and Threads. Connecting accounts is optional, but it helps Prognos match your voice."],
+  ["T-02", "Where do the trends come from?", "Search trends plus what is gaining traction on social platforms, filtered down to the topics around your project."],
+  ["T-03", "Will the drafts sound like me?", "Each project keeps its own brief and voice. The more you edit in the mini editor, the closer new drafts get to how you write."],
+  ["T-04", "Can I cancel any time?", "Yes. Kits are monthly and you can go back to KIT-01 whenever you want without losing your projects."],
 ]
 
-export function Faq() {
+export function Troubleshooting() {
   return (
-    <section id="faq" className="mx-auto max-w-3xl scroll-mt-28 px-4 py-24 sm:px-6">
-      <SectionHeading eyebrow="FAQs" title="Questions? We've got you." />
-      <div className="mt-12 space-y-3">
-        {FAQS.map((item) => (
-          <details key={item.q} className="group rounded-[var(--radius)] border bg-card px-6 py-5 open:shadow-md">
-            <summary className="flex cursor-pointer list-none items-center justify-between gap-6 text-lg tracking-tight [&::-webkit-details-marker]:hidden">
-              {item.q}
-              <span className="grid size-8 shrink-0 place-items-center rounded-full text-primary transition-transform duration-150 group-open:rotate-45" style={pastel("lilac")}>
-                <Plus className="size-4" />
-              </span>
+    <Container id="troubleshooting">
+      <SectionRule n={6} label="Troubleshooting" sheet="Sheet 6 / 6" />
+      <Heading>Before you call us.</Heading>
+      <div className="mt-12 border-t border-foreground">
+        {FAQ.map(([code, q, a]) => (
+          <details key={code} className="group border-b border-foreground">
+            <summary className="grid cursor-pointer list-none grid-cols-[60px_1fr_24px] items-center gap-4 py-5 [&::-webkit-details-marker]:hidden">
+              <span className={cn(mono, "text-[11px] tracking-[0.18em] text-muted-foreground group-open:text-[color:var(--accent)]")}>{code}</span>
+              <span className="text-[18px] font-[600] tracking-[-0.01em]">{q}</span>
+              <span className={cn(mono, "text-[18px] transition-transform duration-[420ms] group-open:rotate-45")}>+</span>
             </summary>
-            <p className="mt-3 leading-relaxed text-muted-foreground">{item.a}</p>
+            <p className="pb-6 pl-[76px] pr-10 text-[15px] leading-[1.6] text-foreground/80">{a}</p>
           </details>
         ))}
       </div>
-    </section>
+    </Container>
   )
 }
 
-export function FinalCta() {
+export function OrderAuthorization() {
   return (
-    <section className="px-3 pb-16 sm:px-6">
-      <div className="relative mx-auto max-w-6xl overflow-hidden rounded-[calc(var(--radius)*2)] bg-gradient-to-br from-primary via-chart-2 to-chart-3 px-6 py-20 text-center text-primary-foreground">
-        <Bubble className="absolute left-8 top-10 hidden -rotate-6 lg:block">Posted 3 reels this week 🔥</Bubble>
-        <Bubble tail="right" className="absolute bottom-10 right-8 hidden rotate-3 lg:block">My hooks finally land 🙌</Bubble>
-        <h2 className="mx-auto max-w-3xl text-4xl leading-[1.05] tracking-tight text-balance sm:text-6xl">
-          Your next post is already trending.
-        </h2>
-        <p className="mx-auto mt-5 max-w-xl text-lg text-primary-foreground/85 sm:text-xl">Find it before everyone else does.</p>
-        <Button asChild size="lg" variant="secondary" className="mt-8 h-14 rounded-full px-8 text-base uppercase tracking-wide">
-          <Link href="/dashboard">Try Prognos free</Link>
-        </Button>
+    <Container className="pb-24">
+      <div className={cn(styles.paper, "relative grid border border-foreground lg:grid-cols-[1fr_1.1fr]")}>
+        <div className="border-b border-foreground p-6 lg:border-b-0 lg:border-r">
+          <p className={cn(mono, "text-[10.5px] uppercase tracking-[0.2em] text-muted-foreground")}>Fig. 7 — Final assembly</p>
+          <FinalAssembly className="mx-auto mt-4 h-[280px] w-full max-w-[380px] text-foreground" />
+        </div>
+        <div className="relative p-6 sm:p-10">
+          <p className={cn(mono, "text-[11px] uppercase tracking-[0.22em] text-muted-foreground")}>Order authorization</p>
+          <h2 className="mt-5 text-[40px] font-[600] leading-[0.98] tracking-[-0.035em] sm:text-[52px]">
+            Your next post is already trending.
+          </h2>
+          <p className="mt-5 max-w-[440px] text-[17px] leading-[1.6] text-foreground/80">
+            Open a project, pick the trend and take the first draft apart. KIT-01 is free and needs no card.
+          </p>
+          <div className="mt-8 flex flex-wrap gap-3">
+            <ManualButton href="/dashboard">
+              Authorize project <span aria-hidden>→</span>
+            </ManualButton>
+            <ManualButton href="#kits" variant="outline">
+              Compare kits
+            </ManualButton>
+          </div>
+          <div className={cn(mono, "mt-10 grid grid-cols-2 gap-6 text-[10px] uppercase tracking-[0.2em] text-muted-foreground")}>
+            <div className="border-t border-foreground pt-2">Authorized by</div>
+            <div className="border-t border-foreground pt-2">Date</div>
+          </div>
+          <Stamp title="Cleared to post" line="QC-7 · Rev. D" className="absolute right-6 top-6 hidden sm:block" />
+        </div>
       </div>
-    </section>
+    </Container>
   )
 }
 
 export function SiteFooter() {
   return (
-    <footer className="border-t">
-      <div className="mx-auto flex max-w-6xl flex-col gap-6 px-4 py-10 text-sm text-muted-foreground sm:flex-row sm:items-center sm:justify-between sm:px-6">
-        <Logo className="text-lg" />
+    <footer className="border-t border-foreground">
+      <div className={cn(mono, "mx-auto grid max-w-[1180px] gap-6 px-4 py-8 text-[10.5px] uppercase tracking-[0.2em] text-muted-foreground sm:grid-cols-[1fr_auto_auto] sm:items-center sm:px-6")}>
+        <span className="normal-case tracking-normal text-foreground [font-family:var(--wm-sans)]">
+          <Logo />
+        </span>
         <nav className="flex flex-wrap gap-6">
-          <a href="#features" className="hover:text-primary">Features</a>
-          <a href="#trend-radar" className="hover:text-primary">Trend radar</a>
-          <a href="#pricing" className="hover:text-primary">Pricing</a>
-          <a href="#faq" className="hover:text-primary">FAQs</a>
+          <a href="#schedule" className="hover:text-foreground">Tools</a>
+          <a href="#procedure" className="hover:text-foreground">Procedure</a>
+          <a href="#kits" className="hover:text-foreground">Kits</a>
+          <a href="#troubleshooting" className="hover:text-foreground">Manual</a>
         </nav>
-        <p>&copy; {new Date().getFullYear()} Prognos. Made for creators.</p>
+        <span>PG-140 · Rev. D · © {new Date().getFullYear()} Prognos</span>
       </div>
     </footer>
   )
