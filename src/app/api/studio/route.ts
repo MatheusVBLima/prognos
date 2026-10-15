@@ -1,13 +1,11 @@
-import { GoogleGenerativeAI } from '@google/generative-ai'
+import { createGoogleGenerativeAI } from '@ai-sdk/google'
 import { streamText } from 'ai'
 
-const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY!)
+const google = createGoogleGenerativeAI({ apiKey: process.env.GEMINI_API_KEY })
 
 export async function POST(req: Request) {
   try {
     const { trend, tone, rank, volume, description, hints } = await req.json()
-
-    const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash' })
 
     // Formatando as hints para o prompt
     const hintsText = hints && hints.length > 0 
@@ -56,31 +54,12 @@ Narração: ...
 Gere um roteiro completo seguindo essas diretrizes:
 `
 
-    const result = await model.generateContentStream(prompt)
-    
-    // Converter o stream do Gemini para o formato do AI SDK
-    const stream = new ReadableStream({
-      async start(controller) {
-        try {
-          for await (const chunk of result.stream) {
-            const text = chunk.text()
-            if (text) {
-              controller.enqueue(new TextEncoder().encode(text))
-            }
-          }
-          controller.close()
-        } catch (error) {
-          controller.error(error)
-        }
-      }
+    const result = streamText({
+      model: google('gemini-flash-latest'),
+      prompt,
     })
 
-    return new Response(stream, {
-      headers: {
-        'Content-Type': 'text/plain; charset=utf-8',
-        'Transfer-Encoding': 'chunked',
-      },
-    })
+    return result.toTextStreamResponse()
 
   } catch (error) {
     console.error('Erro na API:', error)

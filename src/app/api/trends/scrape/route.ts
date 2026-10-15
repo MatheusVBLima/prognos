@@ -34,7 +34,8 @@ interface ScrapedTrend {
   hint: string[];
 }
 
-const bb = new Browserbase({
+// Instanciado sob demanda para não exigir a chave durante o build
+const getBrowserbase = () => new Browserbase({
   apiKey: process.env.BROWSERBASE_API_KEY!,
 });
 
@@ -134,7 +135,7 @@ export async function POST(request: NextRequest) {
     const countryCode = COUNTRY_MAPPING[country] || 'BR';
     
     // Criar sessão com Advanced Stealth Mode e Proxies
-    const session = await bb.sessions.create({
+    const session = await getBrowserbase().sessions.create({
       projectId: process.env.BROWSERBASE_PROJECT_ID!,
       browserSettings: {
         advancedStealth: true,  // Advanced Stealth Mode
