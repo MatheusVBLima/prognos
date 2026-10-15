@@ -1,7 +1,7 @@
 "use client"
 
 import * as React from "react"
-import { Brain, FolderKanban, LayoutDashboard, TrendingUp } from "lucide-react"
+import { Brain, FolderKanban, LayoutDashboard, Palette, TrendingUp } from "lucide-react"
 import { NavMain, type NavItem } from "@/components/nav-main"
 import { NavUser, type NavUserData } from "@/components/nav-user"
 import { ProjectSwitcher, type ProjectSummary } from "@/components/project-switcher"
@@ -10,6 +10,7 @@ import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarRail } fr
 const navItems: NavItem[] = [
   { title: "Overview", url: "/dashboard", icon: LayoutDashboard, exact: true },
   { title: "Projects", url: "/dashboard/projects", icon: FolderKanban },
+  { title: "Brand", url: "/dashboard/brand", icon: Palette },
   { title: "Trends", url: "/dashboard/trends", icon: TrendingUp },
   { title: "Studio", url: "/dashboard/studio", icon: Brain },
 ]

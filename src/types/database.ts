@@ -15,6 +15,71 @@ export type Database = {
   }
   public: {
     Tables: {
+      brand_kits: {
+        Row: {
+          audience_summary: string | null
+          body_font: string
+          colors: Json
+          created_at: string
+          heading_font: string
+          id: string
+          keywords: string[]
+          logo_url: string | null
+          project_id: string
+          source: string
+          tone_of_voice: string | null
+          updated_at: string
+          user_id: string
+          value_proposition: string | null
+          voice_traits: string[]
+          website_snapshot: Json | null
+        }
+        Insert: {
+          audience_summary?: string | null
+          body_font?: string
+          colors?: Json
+          created_at?: string
+          heading_font?: string
+          id?: string
+          keywords?: string[]
+          logo_url?: string | null
+          project_id: string
+          source: string
+          tone_of_voice?: string | null
+          updated_at?: string
+          user_id?: string
+          value_proposition?: string | null
+          voice_traits?: string[]
+          website_snapshot?: Json | null
+        }
+        Update: {
+          audience_summary?: string | null
+          body_font?: string
+          colors?: Json
+          created_at?: string
+          heading_font?: string
+          id?: string
+          keywords?: string[]
+          logo_url?: string | null
+          project_id?: string
+          source?: string
+          tone_of_voice?: string | null
+          updated_at?: string
+          user_id?: string
+          value_proposition?: string | null
+          voice_traits?: string[]
+          website_snapshot?: Json | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "brand_kits_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: true
+            referencedRelation: "projects"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       profiles: {
         Row: {
           avatar_url: string | null

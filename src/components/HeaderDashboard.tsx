@@ -8,6 +8,7 @@ import { BreadcrumbSection } from "@/components/BreadcrumbSection"
 
 const SECTIONS: { prefix: string; label: string }[] = [
   { prefix: "/dashboard/projects", label: "Projects" },
+  { prefix: "/dashboard/brand", label: "Brand" },
   { prefix: "/dashboard/trends", label: "Trends" },
   { prefix: "/dashboard/studio", label: "Script Studio" },
 ]

@@ -1,6 +1,6 @@
 import Link from "next/link"
 import type { Metadata } from "next"
-import { ArrowRight, Brain, FolderPlus, Globe, Pencil, TrendingUp } from "lucide-react"
+import { ArrowRight, Brain, FolderPlus, Globe, Palette, Pencil, TrendingUp } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
@@ -8,6 +8,8 @@ import { requireUser } from "@/lib/auth"
 import { listProjects } from "@/lib/projects/queries"
 import { pickActiveProject } from "@/lib/projects/active"
 import { LANGUAGES } from "@/lib/projects/schema"
+import { getBrandKit } from "@/lib/brand/queries"
+import { Swatches } from "@/components/brand/BrandPreview"
 
 export const metadata: Metadata = { title: "Overview | Prognos" }
 
@@ -40,6 +42,7 @@ export default async function OverviewPage() {
   }
 
   const language = LANGUAGES.find((l) => l.value === active.language)?.label
+  const kit = await getBrandKit(active.id)
 
   return (
     <div className="space-y-8">
@@ -82,7 +85,22 @@ export default async function OverviewPage() {
         </CardContent>
       </Card>
 
-      <div className="grid gap-4 md:grid-cols-2">
+      <div className="grid gap-4 md:grid-cols-3">
+        <Card>
+          <CardHeader>
+            <Palette className="size-6 text-primary" />
+            <CardTitle>{kit ? "Your brand" : "Set up your brand"}</CardTitle>
+            <CardDescription>
+              {kit ? `${kit.heading_font} and ${kit.body_font}` : "Import it from your website or design a new one."}
+            </CardDescription>
+          </CardHeader>
+          <CardContent className="space-y-4">
+            {kit && <Swatches colors={kit.colors} />}
+            <Button variant="outline" asChild>
+              <Link href="/dashboard/brand">{kit ? "Edit brand kit" : "Set up brand"}</Link>
+            </Button>
+          </CardContent>
+        </Card>
         <Card>
           <CardHeader>
             <TrendingUp className="size-6 text-primary" />

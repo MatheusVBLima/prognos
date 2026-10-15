@@ -28,7 +28,7 @@ export async function createProject(input: ProjectInput) {
   return data
 }
 
-export async function updateProject(id: string, input: ProjectInput) {
+export async function updateProject(id: string, input: Partial<ProjectInput>) {
   const supabase = await createClient()
   const { data, error } = await supabase.from("projects").update(input).eq("id", id).select().maybeSingle()
   if (error) throw error
