@@ -72,12 +72,12 @@ export function Hero() {
             </div>
           </div>
 
-          <div className="relative min-h-[340px] lg:min-h-[560px]">
-            <ExplodedPost className="absolute inset-x-0 top-2 h-[330px] w-full text-foreground lg:top-6 lg:h-[520px]" />
+          <div className="relative min-h-[410px] lg:min-h-[560px]">
+            <ExplodedPost className="absolute inset-x-0 top-2 h-[400px] w-full text-foreground lg:top-6 lg:h-[520px]" />
             <Stamp
               title="Approved for posting"
               line="QC-7 · 15 Oct 2026"
-              className="absolute bottom-24 right-6 hidden sm:block lg:bottom-[132px] lg:right-16"
+              className="absolute bottom-24 right-6 hidden sm:block lg:bottom-[132px] lg:right-[34px]"
             />
           </div>
         </div>
