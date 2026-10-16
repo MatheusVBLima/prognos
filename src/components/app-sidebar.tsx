@@ -11,7 +11,7 @@ const navItems: NavItem[] = [
   { title: "Overview", url: "/dashboard", icon: LayoutDashboard, exact: true },
   { title: "Projects", url: "/dashboard/projects", icon: FolderKanban },
   { title: "Brand", url: "/dashboard/brand", icon: Palette },
-  { title: "Trends", url: "/dashboard/trends", icon: TrendingUp },
+  { title: "Opportunities", url: "/dashboard/trends", icon: TrendingUp },
   { title: "Studio", url: "/dashboard/studio", icon: Brain },
 ]
 

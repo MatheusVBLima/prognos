@@ -22,16 +22,25 @@ const voiceOptions = [
   { id: "shimmer", name: "Shimmer", description: "Soft, elegant female voice" },
 ]
 
+function parseHints(value: string | null): string[] {
+  if (!value) return []
+  try {
+    const parsed = JSON.parse(value)
+    return Array.isArray(parsed) ? parsed.map(String) : []
+  } catch {
+    return []
+  }
+}
+
 export default function StudioClient() {
   // Type-safe search params via nuqs
   const [trend] = useQueryState('trend')
-  const [rank] = useQueryState('rank')
-  const [volume] = useQueryState('volume')
+  const [score] = useQueryState('score')
   const [description] = useQueryState('description')
   const [hintsParam] = useQueryState('hints')
   
-  // Parse hints passed through the URL
-  const hints = hintsParam ? JSON.parse(decodeURIComponent(hintsParam)) : []
+  // Facts and hooks passed from an opportunity as a JSON array
+  const hints = parseHints(hintsParam)
 
   // Whether a trend was passed in
   const hasTrendData = trend && description
@@ -78,7 +87,7 @@ export default function StudioClient() {
       const response = await fetch('/api/studio', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ trend, tone, rank, volume, description, hints }),
+        body: JSON.stringify({ trend, tone, score, description, hints }),
       })
 
       if (!response.body) return
@@ -184,20 +193,20 @@ export default function StudioClient() {
                 </h1>
                 
                 <p className="text-lg text-muted-foreground mb-8 max-w-md mx-auto">
-                  To start writing scripts, pick a trend on the Trends page first.
+                  To start writing scripts, pick an opportunity on the Opportunities page first.
                 </p>
                 
                 <div className="space-y-4">
                   <Link href="/dashboard/trends">
                     <Button className="gap-2" size="lg">
                       <TrendingUp className="w-5 h-5" />
-                      Explore trends
+                      See opportunities
                     </Button>
                   </Link>
                   
                   <p className="text-sm text-muted-foreground">
-                    Browse the trending topics and click "Use this trend for a script"
-                    to generate tailored TikTok content.
+                    Open an opportunity and click "Write script" to generate tailored
+                    short-form content.
                   </p>
                 </div>
               </motion.div>
@@ -218,8 +227,7 @@ export default function StudioClient() {
               <h1 className="text-2xl font-bold">Script Studio</h1>
               <div className="flex items-center gap-2 mt-1">
                 <Badge variant="outline">{trend}</Badge>
-                <Badge variant="secondary">#{rank}</Badge>
-                <Badge variant="outline">{volume}+ searches</Badge>
+                {score && <Badge variant="secondary">Score {score}</Badge>}
               </div>
             </div>
           </div>

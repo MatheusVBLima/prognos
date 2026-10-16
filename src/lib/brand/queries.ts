@@ -10,7 +10,7 @@ export type BrandKitInput = Omit<TablesInsert<"brand_kits">, "id" | "user_id" | 
   colors: BrandColor[]
 }
 
-function toBrandKit(row: Tables<"brand_kits">): BrandKit {
+export function toBrandKit(row: Tables<"brand_kits">): BrandKit {
   const colors = Array.isArray(row.colors) ? row.colors.flatMap((c) => brandColorSchema.safeParse(c).data ?? []) : []
   return { ...row, colors }
 }
