@@ -39,7 +39,8 @@ export async function createProjectAction(_: ProjectFormState, formData: FormDat
   const project = await createProject(parsed.data)
   ;(await cookies()).set(ACTIVE_PROJECT_COOKIE, project.id, cookieOptions)
   revalidatePath("/dashboard", "layout")
-  redirect("/dashboard")
+  // Next step of onboarding: the brand behind the content
+  redirect("/dashboard/brand")
 }
 
 export async function updateProjectAction(id: string, _: ProjectFormState, formData: FormData): Promise<ProjectFormState> {

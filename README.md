@@ -6,8 +6,9 @@ See the product roadmap in the project plan. This repository currently covers:
 
 - Accounts with Supabase Auth (email/password and Google)
 - Projects: the products, brands or channels a user creates content for
+- Brand kits: import a project's colors, fonts, logo and voice from its website, or design a new identity with AI from a few questions, then fine-tune it with a live preview
 - A trends dashboard (sample data for now; live per-niche sources come next)
-- A script studio that writes short-form video scripts with Gemini and narrates them with OpenAI TTS
+- A script studio that writes short-form video scripts with Gemini, in the project's language and brand voice, and narrates them with OpenAI TTS
 
 ## Stack
 
@@ -44,9 +45,10 @@ Next.js 16 (App Router) · React 19 · shadcn/ui + Tailwind CSS 4 · Supabase (A
 ## Project layout
 
 - `src/app/(auth)`: sign-in and sign-up pages and auth server actions
-- `src/app/dashboard`: the signed-in app (overview, projects, trends, studio)
+- `src/app/dashboard`: the signed-in app (overview, projects, brand, trends, studio)
 - `supabase/migrations`: SQL migrations (tables, RLS policies, triggers)
 - `src/types/database.ts`: TypeScript types generated from the database schema
+- `src/lib/brand`: brand kit queries, website reader (with private-network protection), AI analysis and the font list
 - `src/lib/projects`: project queries, form validation and active-project selection
 - `src/lib/supabase`: Supabase clients for the browser, server and proxy
 - `src/proxy.ts`: refreshes the session and protects `/dashboard`

@@ -1,7 +1,12 @@
 import OpenAI from 'openai'
+import { getCurrentUser } from '@/lib/auth'
 
 
 export async function POST(req: Request) {
+  if (!(await getCurrentUser())) {
+    return new Response('Unauthorized', { status: 401 })
+  }
+
   try {
     const { text, voice } = await req.json()
 
