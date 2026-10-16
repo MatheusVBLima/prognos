@@ -35,7 +35,7 @@ export async function POST(req: Request) {
   }
 
   try {
-    const { trend, tone, rank, volume, description, hints } = await req.json()
+    const { trend, tone, score, description, hints } = await req.json()
 
     const hintsText = hints && hints.length > 0
       ? hints.map((hint: string, index: number) => `${index + 1}. ${hint}`).join('\n')
@@ -44,7 +44,7 @@ export async function POST(req: Request) {
     const brand = await brandContext()
 
     const prompt = `
-Write a TikTok video script about the trend "${trend}".
+Write a short-form video script (TikTok, Reels, Shorts) about the trend "${trend}".
 ${brand.text ? `
 WHO IS POSTING (connect the trend to them naturally and match their voice):
 ${brand.text}
@@ -56,9 +56,7 @@ SPECIFIC FACTS:
 ${hintsText}
 
 SCRIPT SETTINGS:
-- Ranking position: #${rank}
-- Search volume: ${volume}+
-- Desired tone: ${tone}
+${score ? `- Opportunity score: ${score}/100\n` : ''}- Desired tone: ${tone}
 
 IMPORTANT INSTRUCTIONS:
 1. Use the facts listed under "SPECIFIC FACTS"

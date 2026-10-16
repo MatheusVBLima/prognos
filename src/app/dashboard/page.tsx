@@ -104,12 +104,12 @@ export default async function OverviewPage() {
         <Card>
           <CardHeader>
             <TrendingUp className="size-6 text-primary" />
-            <CardTitle>Explore trends</CardTitle>
-            <CardDescription>See what people are searching for right now.</CardDescription>
+            <CardTitle>Find opportunities</CardTitle>
+            <CardDescription>What&apos;s trending in your niche, scored and turned into ideas.</CardDescription>
           </CardHeader>
           <CardContent>
             <Button variant="outline" asChild>
-              <Link href="/dashboard/trends">Open trends</Link>
+              <Link href="/dashboard/trends">See opportunities</Link>
             </Button>
           </CardContent>
         </Card>

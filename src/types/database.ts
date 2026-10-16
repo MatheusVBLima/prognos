@@ -80,6 +80,44 @@ export type Database = {
           },
         ]
       }
+      keywords: {
+        Row: {
+          active: boolean
+          created_at: string
+          id: string
+          project_id: string
+          source: string
+          term: string
+          user_id: string
+        }
+        Insert: {
+          active?: boolean
+          created_at?: string
+          id?: string
+          project_id: string
+          source?: string
+          term: string
+          user_id?: string
+        }
+        Update: {
+          active?: boolean
+          created_at?: string
+          id?: string
+          project_id?: string
+          source?: string
+          term?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "keywords_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "projects"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       profiles: {
         Row: {
           avatar_url: string | null
@@ -149,12 +187,191 @@ export type Database = {
         }
         Relationships: []
       }
+      trend_ideas: {
+        Row: {
+          competition: number
+          created_at: string
+          evidence: Json
+          fit: number
+          formats: string[]
+          hooks: string[]
+          id: string
+          interest: Json
+          keywords: string[]
+          momentum: number
+          platforms: string[]
+          project_id: string
+          run_id: string | null
+          score: number
+          status: string
+          summary: string
+          title: string
+          updated_at: string
+          user_id: string
+          why_now: string
+        }
+        Insert: {
+          competition: number
+          created_at?: string
+          evidence?: Json
+          fit: number
+          formats?: string[]
+          hooks?: string[]
+          id?: string
+          interest?: Json
+          keywords?: string[]
+          momentum: number
+          platforms?: string[]
+          project_id: string
+          run_id?: string | null
+          score: number
+          status?: string
+          summary: string
+          title: string
+          updated_at?: string
+          user_id?: string
+          why_now: string
+        }
+        Update: {
+          competition?: number
+          created_at?: string
+          evidence?: Json
+          fit?: number
+          formats?: string[]
+          hooks?: string[]
+          id?: string
+          interest?: Json
+          keywords?: string[]
+          momentum?: number
+          platforms?: string[]
+          project_id?: string
+          run_id?: string | null
+          score?: number
+          status?: string
+          summary?: string
+          title?: string
+          updated_at?: string
+          user_id?: string
+          why_now?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "trend_ideas_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "projects"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "trend_ideas_run_id_fkey"
+            columns: ["run_id"]
+            isOneToOne: false
+            referencedRelation: "trend_runs"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      trend_runs: {
+        Row: {
+          error: string | null
+          finished_at: string | null
+          id: string
+          project_id: string
+          sources: string[]
+          started_at: string
+          status: string
+          trigger: string
+          user_id: string
+        }
+        Insert: {
+          error?: string | null
+          finished_at?: string | null
+          id?: string
+          project_id: string
+          sources?: string[]
+          started_at?: string
+          status?: string
+          trigger: string
+          user_id?: string
+        }
+        Update: {
+          error?: string | null
+          finished_at?: string | null
+          id?: string
+          project_id?: string
+          sources?: string[]
+          started_at?: string
+          status?: string
+          trigger?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "trend_runs_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "projects"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      trend_signals: {
+        Row: {
+          collected_at: string
+          id: string
+          keyword: string
+          payload: Json
+          project_id: string
+          region: string | null
+          run_id: string | null
+          source: string
+          user_id: string
+        }
+        Insert: {
+          collected_at?: string
+          id?: string
+          keyword: string
+          payload: Json
+          project_id: string
+          region?: string | null
+          run_id?: string | null
+          source: string
+          user_id?: string
+        }
+        Update: {
+          collected_at?: string
+          id?: string
+          keyword?: string
+          payload?: Json
+          project_id?: string
+          region?: string | null
+          run_id?: string | null
+          source?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "trend_signals_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "projects"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "trend_signals_run_id_fkey"
+            columns: ["run_id"]
+            isOneToOne: false
+            referencedRelation: "trend_runs"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      owns_project: { Args: { target: string }; Returns: boolean }
     }
     Enums: {
       [_ in never]: never
